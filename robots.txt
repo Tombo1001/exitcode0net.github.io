@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: https://blog.exitcode0.net/sitemap.xml
+Sitemap: https://exitcode0.net/sitemap.xml
