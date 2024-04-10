@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Huggingface on ExitCode0</title>
+    <link>http://localhost:1313/tags/huggingface/</link>
+    <description>Recent content in Huggingface on ExitCode0</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Wed, 13 Mar 2024 06:10:33 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/huggingface/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Free and Local Large Language Models</title>
+      <link>http://localhost:1313/posts/free-and-local-large-language-models/</link>
+      <pubDate>Wed, 13 Mar 2024 06:10:33 +0000</pubDate>
+      <guid>http://localhost:1313/posts/free-and-local-large-language-models/</guid>
+      <description>TLDR: A brief overview of large language models (LLMs) and a guide on using LMstudio and VSCode Continue to replcate github copilot, without the subscription fee.
+LLMs: The Next Revolution in Computing? Large Language Models (LLMs) have been making waves in the tech industry lately. These neural network models can understand and generate human-like text, making them a game-changer for many applications, from content creation to customer support. In this post, we&amp;rsquo;ll explore what LLMs are, how you can set up and use them with LMstudio, how to integrate LMstudio with VS Code, and conclude with why LLMs are not AGI but can still be incredibly useful for professionals.</description>
+    </item>
+  </channel>
+</rss>
