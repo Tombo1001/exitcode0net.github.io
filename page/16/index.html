@@ -145,6 +145,22 @@ if (!doNotTrack) {
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Powershell - Checking the Language Mode
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>For security purposes, it is possible to control the language mode in a given Powershell session. These language modes can constrict which modules can be loaded during the life of a powershell session.
+Learn mode about Powershell langeuage modes: About Language Modes – Microsoft
+Detect the Current Language Mode $sLangMode: $ExecutionContext.SessionState.LanguageMode
+If ($sLangMode -ne “FullLanguage”){
+Write-Host ” !! Unable to run scrit – Powershell Using Wrong Language Mode !! ”...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-02-05 09:00:49 +0000 UTC'>February 5, 2019</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Tom</footer>
+  <a class="entry-link" aria-label="post link to Powershell - Checking the Language Mode" href="http://localhost:1313/posts/powershell-checking-the-language-mode/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">&#39;Copy, Paste&#39; With Powershell Sendkeys
     </h2>
   </header>
@@ -165,7 +181,7 @@ Perhaps it is a case of a website which prevents text form being sent to a field
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://localhost:1313/">ExitCode0</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/">ExitCode0</a></span> · 
 
     <span>
         Powered by
