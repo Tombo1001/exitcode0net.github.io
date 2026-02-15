@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Connect ZBT-2 on ExitCode0</title>
+    <link>http://localhost:1313/tags/connect-zbt-2/</link>
+    <description>Recent content in Connect ZBT-2 on ExitCode0</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Thu, 01 Jan 2026 10:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/connect-zbt-2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Local Home Automation With The Connect ZBT-2</title>
+      <link>http://localhost:1313/posts/local-home-automation-with-theconnect-zbt2/</link>
+      <pubDate>Thu, 01 Jan 2026 10:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/local-home-automation-with-theconnect-zbt2/</guid>
+      <description>Let&amp;#39;s take a look at the Connect ZBT-2, it&amp;#39;s setup, range and how to use it for local home automation</description>
+    </item>
+  </channel>
+</rss>
