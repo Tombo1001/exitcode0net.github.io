@@ -1,1 +1,21 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Selfhosted on ExitCode0</title><link>https://exitcode0.net/categories/selfhosted/</link><description>Recent content in Selfhosted on ExitCode0</description><generator>Hugo -- 0.160.1</generator><language>en-gb</language><lastBuildDate>Sun, 12 Apr 2026 12:22:55 +0100</lastBuildDate><atom:link href="https://exitcode0.net/categories/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>Home Assistant HTTPS Certificates with Tailscale, Traefik and CoreDNS</title><link>https://exitcode0.net/posts/homeassistant-tls-with-tailscale-traefik/</link><pubDate>Sun, 07 Jan 2024 17:00:00 +0100</pubDate><guid>https://exitcode0.net/posts/homeassistant-tls-with-tailscale-traefik/</guid><description>&lt;p&gt;In previous posts, I&amp;rsquo;ve explained how to use Tailscale&amp;rsquo;s MagicDNS and HTTPS certificate feature to generate a TLS cert for your Home Assistant install: &lt;a href="../homeassistant-tls-with-tailscale"&gt;Homeassistant Enable MagicDNS and HTTPS Certificates in Tailscale&lt;/a&gt;. That setup required you to reformat the TLS cert and copy it to the Home Assistant container&amp;hellip; it wouldn&amp;rsquo;t be to much of a task to automate those actions, but fortunately there is now a superior method of applying and renewing a Tailscale cert for HASS (and many other self-hosted services). Let us dig in to that&amp;hellip;&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Selfhosted on ExitCode0</title>
+    <link>http://localhost:1313/categories/selfhosted/</link>
+    <description>Recent content in Selfhosted on ExitCode0</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Wed, 17 Apr 2024 10:21:38 +0100</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/selfhosted/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Free and Local Large Language Models</title>
+      <link>http://localhost:1313/posts/free-and-local-large-language-models/</link>
+      <pubDate>Wed, 13 Mar 2024 06:10:33 +0000</pubDate>
+      <guid>http://localhost:1313/posts/free-and-local-large-language-models/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;TLDR:&lt;/strong&gt; A brief overview of large language models (LLMs) and a guide on using LMstudio and VSCode Continue to replcate github copilot, without the subscription fee.&lt;/p&gt;
+&lt;h2 id=&#34;llms-the-next-revolution-in-computing&#34;&gt;LLMs: The Next Revolution in Computing?&lt;/h2&gt;
+&lt;p&gt;Large Language Models (LLMs) have been making waves in the tech industry lately. These neural network models can understand and generate human-like text, making them a game-changer for many applications and industries, from content creation to customer support. In this post, we will explore what LLMs are, how you can set up and use them with LMstudio, how to integrate LMstudio with VS Code, and conclude with why LLMs are not AGI but can still be incredibly useful for professionals. We will also provide examples of popular large language models like llama2, GPT-3.5, and Gemini, and discuss their performance.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
