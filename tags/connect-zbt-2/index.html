@@ -34,6 +34,65 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
+</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7745507566538945"
+    crossorigin="anonymous"></script>
+<style>
+ 
+.home-info ins.adsbygoogle,
+.home-info ins[data-ad-slot],
+.home-info ins,
+.first-entry ins.adsbygoogle,
+.first-entry ins[data-ad-slot],
+.first-entry ins {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+}
+</style>
+<script>
+ 
+(function () {
+    var BLOCKED = ['.home-info', '.first-entry'];
+
+    function purge(root) {
+        BLOCKED.forEach(function (sel) {
+            root.querySelectorAll(sel + ' ins').forEach(function (el) { el.remove(); });
+        });
+    }
+
+    function handleNode(node) {
+        if (node.nodeType !== 1) return;
+        BLOCKED.forEach(function (sel) {
+             
+            if (node.closest && node.closest(sel)) {
+                if (node.matches('ins')) { node.remove(); return; }
+                node.querySelectorAll('ins').forEach(function (el) { el.remove(); });
+            }
+             
+            if (node.matches && node.matches(sel)) { purge(node); }
+        });
+    }
+
+    var ob = new MutationObserver(function (mutations) {
+        mutations.forEach(function (m) {
+            m.addedNodes.forEach(handleNode);
+        });
+    });
+
+    function start() {
+        purge(document);
+        ob.observe(document.body, { childList: true, subtree: true });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+})();
 </script><script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
     data-id="exit" data-description="Support me on Buy me a coffee!" data-message="Buy me a coffee"
     data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="165"></script><style>
