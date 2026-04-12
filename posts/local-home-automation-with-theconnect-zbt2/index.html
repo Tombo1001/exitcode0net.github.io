@@ -8,7 +8,7 @@
 <title>Local Home Automation With The Connect ZBT-2 | ExitCode0</title>
 <meta name="keywords" content="home automation, home assistant, Hardware, Connect ZBT-2, Zigbee">
 <meta name="description" content="Let&#39;s take a look at the Connect ZBT-2, it&#39;s setup, range and how to use it for local home automation">
-<meta name="author" content="Tom C">
+<meta name="author" content="Tom Cocking">
 <link rel="canonical" href="http://localhost:1313/posts/local-home-automation-with-theconnect-zbt2/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.fd5566c526ae48aadabd950798a2dc3568536401560eae5caac3765a42a9e7b5.css" integrity="sha256-/VVmxSauSKravZUHmKLcNWhTZAFWDq5cqsN2WkKp57U=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
@@ -33,27 +33,181 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7745507566538945"
-    crossorigin="anonymous"></script>
-<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+</script><script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
     data-id="exit" data-description="Support me on Buy me a coffee!" data-message="Buy me a coffee"
-    data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="165"></script>
+    data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="165"></script><style>
+#cookie-notice {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 580px;
+    background: #2a2a2c;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+    color: rgba(255,255,255,0.82);
+    font-size: 0.875rem;
+    padding: 0.9rem 1.1rem;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+#cookie-notice span {
+    flex: 1;
+    line-height: 1.45;
+}
+#cookie-notice-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+#cookie-notice-accept,
+#cookie-notice-deny {
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    border-radius: 6px;
+    border: none;
+    text-decoration: none;
+    white-space: nowrap;
+}
+#cookie-notice-accept {
+    background: rgba(86,228,58,0.15);
+    color: rgb(86,228,58);
+    border: 1px solid rgba(86,228,58,0.35);
+}
+#cookie-notice-accept:hover {
+    background: rgba(86,228,58,0.25);
+}
+#cookie-notice-deny {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.12);
+}
+#cookie-notice-deny:hover {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.75);
+}
+#cookie-notice-more {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.38);
+    text-decoration: none;
+    white-space: nowrap;
+}
+#cookie-notice-more:hover {
+    color: rgba(255,255,255,0.6);
+}
+@media (max-width: 540px) {
+    #cookie-notice {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    #cookie-notice-buttons {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+</style>
 
-
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDE9MPZR9T"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
+<div id="cookie-notice" style="display:none">
+    <span>We use analytics cookies to understand how this site is used. No data is collected without your consent.</span>
+    <div id="cookie-notice-buttons">
+        <a id="cookie-notice-accept">Accept</a>
+        <a id="cookie-notice-deny">Decline</a>
+        <a id="cookie-notice-more" href="/privacy">Privacy policy</a>
+    </div>
+</div>
+    <script>
+        function createCookie(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
         }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-EDE9MPZR9T');
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
         }
-      </script><meta property="og:url" content="http://localhost:1313/posts/local-home-automation-with-theconnect-zbt2/">
+        function eraseCookie(name) {
+            createCookie(name,"",-1);
+        }
+    
+        if(readCookie('cookie-notice-option')=='true') {
+            
+            
+            function loadScriptAsync(scriptSrc, callback) {
+                if (typeof callback !== 'function') {
+                    throw new Error('Not a valid callback for async script load');
+                }
+                var script = document.createElement('script');
+                script.onload = callback;
+                script.src = scriptSrc;
+                document.head.appendChild(script);
+            }
+    
+            loadScriptAsync('https://www.googletagmanager.com/gtag/js?id=G-EDE9MPZR9T', function () {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-EDE9MPZR9T', { 'anonymize_ip': true }); 
+            })
+    
+            
+        } else if (readCookie('cookie-notice-option')!='false'){
+            document.getElementById('cookie-notice').style.display = 'flex';
+        }
+    
+        document.getElementById('cookie-notice-accept').addEventListener("click",function() {
+            createCookie('cookie-notice-option','true',31);
+            document.getElementById('cookie-notice').style.display = 'none';
+            location.reload();
+        });
+    
+        document.getElementById('cookie-notice-deny').addEventListener("click",function() {
+            createCookie('cookie-notice-option','false',31);
+            document.getElementById('cookie-notice').style.display = 'none';
+            location.reload();
+        });
+    
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "\"Local Home Automation With The Connect ZBT-2\"",
+  "description": "\"Let's take a look at the Connect ZBT-2, it's setup, range and how to use it for local home automation\"",
+  "url": "\"http://localhost:1313/posts/local-home-automation-with-theconnect-zbt2/\"",
+  "datePublished": "\"2026-01-01T10:00:00Z\"",
+  "dateModified": "\"2026-02-15T20:15:35Z\"",
+  "author": {
+    "@type": "Person",
+    "name": "\"Tom Cocking\"",
+    "url": "\"https://tomcocking.com\""
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ExitCode0",
+    "url": "https://exitcode0.net"
+  },
+  "image": "\"https://exitcode0.net/images/feed-the-kitten.JPG\""
+}
+</script><meta property="og:url" content="http://localhost:1313/posts/local-home-automation-with-theconnect-zbt2/">
   <meta property="og:site_name" content="ExitCode0">
   <meta property="og:title" content="Local Home Automation With The Connect ZBT-2">
   <meta property="og:description" content="Let&#39;s take a look at the Connect ZBT-2, it&#39;s setup, range and how to use it for local home automation">
@@ -61,7 +215,7 @@
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-01-01T10:00:00+00:00">
-    <meta property="article:modified_time" content="2026-01-01T10:00:00+00:00">
+    <meta property="article:modified_time" content="2026-02-15T20:15:35+00:00">
     <meta property="article:tag" content="Home Automation">
     <meta property="article:tag" content="Home Assistant">
     <meta property="article:tag" content="Hardware">
@@ -108,10 +262,10 @@
   "wordCount" : "289",
   "inLanguage": "en",
   "image":"http://localhost:1313/images/feed-the-kitten.JPG","datePublished": "2026-01-01T10:00:00Z",
-  "dateModified": "2026-01-01T10:00:00Z",
+  "dateModified": "2026-02-15T20:15:35Z",
   "author":{
     "@type": "Person",
-    "name": "Tom C"
+    "name": "Tom Cocking"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -208,7 +362,7 @@
     <div class="post-description">
       Let&#39;s take a look at the Connect ZBT-2, it&#39;s setup, range and how to use it for local home automation
     </div>
-    <div class="post-meta"><span title='2026-01-01 10:00:00 +0000 UTC'>January 1, 2026</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Tom C</span>
+    <div class="post-meta"><span title='2026-01-01 10:00:00 +0000 UTC'>January 1, 2026</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Tom Cocking</span>
 
 </div>
   </header> 
@@ -267,10 +421,10 @@ Final verdict: If you&rsquo;ve struggled with Z-Wave reliability in the past, th
     <br>
     <span>How to Migrate VMs Between Standalone Proxmox Nodes Without Clustering</span>
   </a>
-  <a class="next" href="http://localhost:1313/posts/proxmox-ollama-lxc-nvidia-gpu-passthrough/">
+  <a class="next" href="http://localhost:1313/posts/home-assistant-with-esphome-bluetooth-proxies/">
     <span class="title">Next »</span>
     <br>
-    <span>Running Ollama in a Proxmox LXC with NVIDIA GPU Passthrough</span>
+    <span>Home Assistant With ESPhome Bluetooth Proxies</span>
   </a>
 </nav>
 
