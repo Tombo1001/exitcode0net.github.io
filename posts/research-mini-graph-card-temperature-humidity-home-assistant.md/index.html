@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>ExitCode0</title>
+<meta name="keywords" content="">
+<meta name="description" content="Research Brief: mini-graph-card, SwitchBot Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer, and HACS Installation
+This brief consolidates factual, sourced information for a technical blog post combining the kalkih/mini-graph-card custom Lovelace card with SwitchBot temperature/humidity sensors in Home Assistant, installed via HACS.
+
+1. mini-graph-card (kalkih/mini-graph-card)
+1.1 What it does
+Mini Graph Card is a minimalistic, customizable graph card for the Home Assistant Lovelace UI authored by kalkih. It works with entities from the sensor and binary_sensor domains and renders both the entity&rsquo;s current state and a line (or bar) graph representation of its recorded history. The project is MIT‑licensed and at the time of writing the latest stable release is v0.13.0 (released 29 May 2025), with roughly 3.7–3.8k stars on GitHub.">
+<meta name="author" content="Tom Cocking">
+<link rel="canonical" href="http://localhost:1313/posts/research-mini-graph-card-temperature-humidity-home-assistant.md/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fd5566c526ae48aadabd950798a2dc3568536401560eae5caac3765a42a9e7b5.css" integrity="sha256-/VVmxSauSKravZUHmKLcNWhTZAFWDq5cqsN2WkKp57U=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/research-mini-graph-card-temperature-humidity-home-assistant.md/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7745507566538945"
+    crossorigin="anonymous"></script>
+<style>
+ 
+.home-info ins.adsbygoogle,
+.home-info ins[data-ad-slot],
+.home-info ins,
+.first-entry ins.adsbygoogle,
+.first-entry ins[data-ad-slot],
+.first-entry ins {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+}
+</style>
+<script>
+ 
+(function () {
+    var BLOCKED = ['.home-info', '.first-entry'];
+
+    function purge(root) {
+        BLOCKED.forEach(function (sel) {
+            root.querySelectorAll(sel + ' ins').forEach(function (el) { el.remove(); });
+        });
+    }
+
+    function handleNode(node) {
+        if (node.nodeType !== 1) return;
+        BLOCKED.forEach(function (sel) {
+             
+            if (node.closest && node.closest(sel)) {
+                if (node.matches('ins')) { node.remove(); return; }
+                node.querySelectorAll('ins').forEach(function (el) { el.remove(); });
+            }
+             
+            if (node.matches && node.matches(sel)) { purge(node); }
+        });
+    }
+
+    var ob = new MutationObserver(function (mutations) {
+        mutations.forEach(function (m) {
+            m.addedNodes.forEach(handleNode);
+        });
+    });
+
+    function start() {
+        purge(document);
+        ob.observe(document.body, { childList: true, subtree: true });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+})();
+</script><script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+    data-id="exit" data-description="Support me on Buy me a coffee!" data-message="Buy me a coffee"
+    data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="165"></script><style>
+#cookie-notice {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 580px;
+    background: #2a2a2c;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+    color: rgba(255,255,255,0.82);
+    font-size: 0.875rem;
+    padding: 0.9rem 1.1rem;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+#cookie-notice span {
+    flex: 1;
+    line-height: 1.45;
+}
+#cookie-notice-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+#cookie-notice-accept,
+#cookie-notice-deny {
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    border-radius: 6px;
+    border: none;
+    text-decoration: none;
+    white-space: nowrap;
+}
+#cookie-notice-accept {
+    background: rgba(86,228,58,0.15);
+    color: rgb(86,228,58);
+    border: 1px solid rgba(86,228,58,0.35);
+}
+#cookie-notice-accept:hover {
+    background: rgba(86,228,58,0.25);
+}
+#cookie-notice-deny {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.12);
+}
+#cookie-notice-deny:hover {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.75);
+}
+#cookie-notice-more {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.38);
+    text-decoration: none;
+    white-space: nowrap;
+}
+#cookie-notice-more:hover {
+    color: rgba(255,255,255,0.6);
+}
+@media (max-width: 540px) {
+    #cookie-notice {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    #cookie-notice-buttons {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+</style>
+
+<div id="cookie-notice" style="display:none">
+    <span>We use analytics cookies to understand how this site is used. No data is collected without your consent.</span>
+    <div id="cookie-notice-buttons">
+        <a id="cookie-notice-accept">Accept</a>
+        <a id="cookie-notice-deny">Decline</a>
+        <a id="cookie-notice-more" href="/privacy">Privacy policy</a>
+    </div>
+</div>
+    <script>
+        function createCookie(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+        function eraseCookie(name) {
+            createCookie(name,"",-1);
+        }
+    
+        if(readCookie('cookie-notice-option')=='true') {
+            
+            
+            function loadScriptAsync(scriptSrc, callback) {
+                if (typeof callback !== 'function') {
+                    throw new Error('Not a valid callback for async script load');
+                }
+                var script = document.createElement('script');
+                script.onload = callback;
+                script.src = scriptSrc;
+                document.head.appendChild(script);
+            }
+    
+            loadScriptAsync('https://www.googletagmanager.com/gtag/js?id=G-EDE9MPZR9T', function () {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-EDE9MPZR9T', { 'anonymize_ip': true }); 
+            })
+    
+            
+        } else if (readCookie('cookie-notice-option')!='false'){
+            document.getElementById('cookie-notice').style.display = 'flex';
+        }
+    
+        document.getElementById('cookie-notice-accept').addEventListener("click",function() {
+            createCookie('cookie-notice-option','true',31);
+            document.getElementById('cookie-notice').style.display = 'none';
+            location.reload();
+        });
+    
+        document.getElementById('cookie-notice-deny').addEventListener("click",function() {
+            createCookie('cookie-notice-option','false',31);
+            document.getElementById('cookie-notice').style.display = 'none';
+            location.reload();
+        });
+    
+    </script>
+    <meta property="og:url" content="http://localhost:1313/posts/research-mini-graph-card-temperature-humidity-home-assistant.md/">
+  <meta property="og:site_name" content="ExitCode0">
+  <meta property="og:title" content="ExitCode0">
+  <meta property="og:description" content="Research Brief: mini-graph-card, SwitchBot Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer, and HACS Installation This brief consolidates factual, sourced information for a technical blog post combining the kalkih/mini-graph-card custom Lovelace card with SwitchBot temperature/humidity sensors in Home Assistant, installed via HACS.
+1. mini-graph-card (kalkih/mini-graph-card) 1.1 What it does Mini Graph Card is a minimalistic, customizable graph card for the Home Assistant Lovelace UI authored by kalkih. It works with entities from the sensor and binary_sensor domains and renders both the entity’s current state and a line (or bar) graph representation of its recorded history. The project is MIT‑licensed and at the time of writing the latest stable release is v0.13.0 (released 29 May 2025), with roughly 3.7–3.8k stars on GitHub.">
+  <meta property="og:locale" content="en-gb">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="Research Brief: mini-graph-card, SwitchBot Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer, and HACS Installation
+This brief consolidates factual, sourced information for a technical blog post combining the kalkih/mini-graph-card custom Lovelace card with SwitchBot temperature/humidity sensors in Home Assistant, installed via HACS.
+
+1. mini-graph-card (kalkih/mini-graph-card)
+1.1 What it does
+Mini Graph Card is a minimalistic, customizable graph card for the Home Assistant Lovelace UI authored by kalkih. It works with entities from the sensor and binary_sensor domains and renders both the entity&rsquo;s current state and a line (or bar) graph representation of its recorded history. The project is MIT‑licensed and at the time of writing the latest stable release is v0.13.0 (released 29 May 2025), with roughly 3.7–3.8k stars on GitHub.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "",
+      "item": "http://localhost:1313/posts/research-mini-graph-card-temperature-humidity-home-assistant.md/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "name": "",
+  "description": "Research Brief: mini-graph-card, SwitchBot Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer, and HACS Installation This brief consolidates factual, sourced information for a technical blog post combining the kalkih/mini-graph-card custom Lovelace card with SwitchBot temperature/humidity sensors in Home Assistant, installed via HACS.\n1. mini-graph-card (kalkih/mini-graph-card) 1.1 What it does Mini Graph Card is a minimalistic, customizable graph card for the Home Assistant Lovelace UI authored by kalkih. It works with entities from the sensor and binary_sensor domains and renders both the entity\u0026rsquo;s current state and a line (or bar) graph representation of its recorded history. The project is MIT‑licensed and at the time of writing the latest stable release is v0.13.0 (released 29 May 2025), with roughly 3.7–3.8k stars on GitHub.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Research Brief: mini-graph-card, SwitchBot Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer, and HACS Installation This brief consolidates factual, sourced information for a technical blog post combining the kalkih/mini-graph-card custom Lovelace card with SwitchBot temperature/humidity sensors in Home Assistant, installed via HACS.\n1. mini-graph-card (kalkih/mini-graph-card) 1.1 What it does Mini Graph Card is a minimalistic, customizable graph card for the Home Assistant Lovelace UI authored by kalkih. It works with entities from the sensor and binary_sensor domains and renders both the entity’s current state and a line (or bar) graph representation of its recorded history. The project is MIT‑licensed and at the time of writing the latest stable release is v0.13.0 (released 29 May 2025), with roughly 3.7–3.8k stars on GitHub.\nConceptually, the card retrieves history from Home Assistant’s recorder, groups recorded values into time buckets defined by group_by and points_per_hour, and then collapses each bucket into a single point or bar using an aggregate function (e.g., avg, min, max).\n1.2 Key features Drawing from the official README, the card offers:\nMultiple entities on one graph, with per‑entity colors, names, units, and aggregate functions. Line, bar, and “fill” rendering modes, with optional smoothing and configurable line width. Dynamic line coloring via color_thresholds (with optional linear interpolation of stops and smooth/hard transitions). Primary and secondary Y‑axes, including soft/hard upper and lower bounds and a min_bound_range to prevent tiny variations from being exaggerated. Flexible time windows through hours_to_show and points_per_hour (governing graph detail/smoothing). Aggregate functions: avg, median, min, max, first, last, sum, delta (max − min), diff (last − first). State display options including the current state, average, extrema, legend, Y‑axis labels, and per‑entity show/hide of state, line, fill, points, and legend. Show/hide UI elements (name, icon, state, graph, fill, points, legend, average, extrema, labels, labels_secondary, loading_indicator). Tap actions (more-info, navigate, call-service, url, none). Local browser caching of history (cache: true by default) and a configurable update_interval (in seconds) instead of every state change. Logarithmic scale, state_map for non‑numeric/binary sensors, value_factor scaling, and attribute access including dot‑notation traversal of dictionary and list attributes. 1.3 Installation via HACS — exact steps The official README states the card is available in HACS (Home Assistant Community Store), noting that “HACS is a third party community store and is not included in Home Assistant out of the box.”\nThe standard HACS flow for this card is:\nOpen Home Assistant → HACS in the sidebar. Open the Frontend section (in HACS 2.x this list is unified under “Custom repositories”/the main HACS view, but the card appears in the same place either way). Click Explore \u0026 Download Repositories (the “+” button at the bottom right). Search for “mini-graph-card” and select the entry by kalkih. Click Download, confirm the version in the dialog, and click Download again. HACS places the bundle at config/www/community/mini-graph-card/mini-graph-card-bundle.js (referenced in Home Assistant as /hacsfiles/mini-graph-card/mini-graph-card-bundle.js). Restart Home Assistant (or reload the frontend resources) so the new card is registered. Add the resource reference if it is not added automatically (HACS does this for most modern installs, but the README gives explicit instructions for both YAML and UI): YAML: in configuration.yaml, resources: - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js type: module UI: enable advanced mode in your user profile, then go to Settings → Dashboards → Resources (the README phrases this as Configuration → Lovelace Dashboards → Resources Tab), click the orange +, set URL to /hacsfiles/mini-graph-card/mini-graph-card-bundle.js, and select type JavaScript Module. Add a manual card in your dashboard with type: custom:mini-graph-card. The README explicitly notes for HACS users: “Use /hacsfiles/mini-graph-card/mini-graph-card-bundle.js and select ‘JavaScript Module’ for HACS install.”\n1.4 Key configuration options for this post The following are taken directly from the project’s README option tables.\nOption Type Default Scope Purpose show_state boolean — Entity (and show: block) Display the entity’s current state. Set true on a per‑entity basis when graphing multiple sensors so each value is visible in the legend area. In show:, the corresponding state flag accepts true, false, or last (where last shows the value of the last graph point). color_thresholds list of {value, color} objects — Card Defines threshold stops for dynamic graph coloring. With color_thresholds_transition: smooth (default) values blend; with hard, the color switches abruptly. Intermediate stops can omit value, in which case they are interpolated linearly between the surrounding stops. Useful for things like coloring a humidity graph green between 40–60% and red below or above. y_axis: secondary string — Entity Routes that entity to the right‑hand secondary Y‑axis instead of the default left axis. Pair with lower_bound_secondary, upper_bound_secondary, min_bound_range_secondary, and show.labels_secondary for proper scaling. The README’s Alternate y‑axis example mixes a “Night” indicator on the secondary axis with three temperature sensors on the primary axis. decimals integer — Card Forces the exact number of decimals shown for displayed states (does not affect data resolution, only rendering). hours_to_show integer 24 Card How many hours of history the graph covers. Common values: 24 (1 day), 72 (3 days), 168 (1 week). aggregate_func string avg Card or per‑entity Method used to collapse each time bucket into a point: avg, median, min, max, first, last, sum, delta, diff. Set per‑entity to plot, e.g., daily min/max/avg of the same temperature sensor on one graph. points_per_hour number 0.5 Card Number of data points to display per hour — effectively the detail / smoothing of the graph. Higher values (e.g., 60) give near‑realtime detail for short windows; lower values (e.g., 0.25) smooth out long windows like a week of data. The README’s Show data from the past week example uses hours_to_show: 168 with points_per_hour: 0.25; the Data aggregation functions example combines per‑entity aggregate_func: max/min/avg with group_by: date; and the Dynamic line color example shows color_thresholds for a temperature sensor:\ncolor_thresholds: - value: 20 color: \"#f39c12\" - value: 21 color: \"#d35400\" - value: 21.5 color: \"#c0392b\" 2. SwitchBot Meter Plus and Indoor/Outdoor Thermo‑Hygrometer in Home Assistant The smarthomeindex.com URL referenced in the brief was not directly retrievable, so the information below is drawn from SwitchBot’s official product pages, the official Home Assistant SwitchBot documentation, and independent reviews (SmartHomeScene, The Gadgeteer, Matter Alpha, Creating Smart Home, TechHive).\n2.1 What sensors do they provide? SwitchBot Meter Plus (indoor thermo‑hygrometer):\nTemperature and relative humidity, sampled by a Swiss‑made (Sensirion) sensor at roughly 4 readings per second. Manufacturer‑quoted accuracy: ±0.2 °C / ±0.4 °F for temperature and ±2% RH for humidity (the broader datasheet range cited by SwitchBot is up to ±1.8% RH and ±0.36 °F). A 3‑inch monochrome LCD with a comfort indicator (dry/comfort/wet) and battery icon. Derived metrics — dewpoint, vapor‑pressure deficit (VPD), and absolute humidity — are computed by the SwitchBot app/cloud and require a SwitchBot Hub for push notifications based on those derived values. SwitchBot Indoor/Outdoor Thermo‑Hygrometer (Meter Outdoor):\nTemperature and relative humidity from the same Swiss Sensirion sensor with a 4‑second sampling interval. Specified operating range −20 °C to 60 °C; SwitchBot indicates it can read down to −30 °C / up to 80 °C in practice (per the Creating Smart Home review). IP65 dust/water resistance, AAA × 2 batteries, manufacturer‑quoted up to ~2 years battery life, lanyard included for hanging. No built‑in display — readings are seen via a paired Meter Plus / Hub 2 / Meter Pro display, or via an app/integration. Same dewpoint/VPD/absolute humidity metrics when paired with a SwitchBot Hub. When integrated into Home Assistant via the SwitchBot Bluetooth integration, the entities exposed for these meter‑class devices are typically: temperature, humidity, battery, and Bluetooth signal strength (RSSI). (The Meter Pro CO2 Monitor adds a CO₂ sensor, and certain users have reported the Meter Plus battery sensor as occasionally unavailable — see the linked Home Assistant Community thread — but temperature and humidity work reliably.)\n2.2 Native Home Assistant integration The official SwitchBot integration in Home Assistant is a Bluetooth integration. Per the official documentation:\n“In order to use this integration, it is required to have working Bluetooth set up on the device running Home Assistant. A SwitchBot Hub is not required for this integration.” The Meter, Meter Plus, Indoor/Outdoor Thermo‑Hygrometer, and Meter Pro (CO2 Monitor) are all auto‑discovered by Home Assistant as Bluetooth devices, exposing temperature, humidity (and CO₂ for the Meter Pro CO2), plus battery and signal strength. Bluetooth range can be extended using Home Assistant Bluetooth proxies (e.g., ESPHome on an ESP32, or a Shelly Bluetooth Gateway), which is the recommended approach for outdoor sensors placed beyond the range of the host’s Bluetooth radio. A SwitchBot Hub is only required for cloud features such as remote access, long‑term cloud history, derived‑value alerts, and Matter exposure (via Hub 2 / Hub 3 / Hub Mini Matter). The Home Assistant Community forum has historically also documented an alternative MQTT path (e.g., sbm2mqtt) that scrapes BLE advertisements from a Pi and publishes them to MQTT, but the project README itself notes the official Bluetooth integration is now the recommended, simpler method:\n“UPDATE — The Home Assistant SwitchBot Bluetooth integration now supports Meters. That along with Bluetooth proxies is a much simpler way to bring your Meters into Home Assistant. I now recommend that you use that method instead.” — Home Assistant Community, “SwitchBot Meter Temperature \u0026 Humidity … with Home Assistant”.\n2.3 Bluetooth, local polling, and cloud SwitchBot meters communicate over Bluetooth Low Energy (BLE 4.2 or above) with a manufacturer‑specified open‑air range of roughly 120 m / 394 ft. In Home Assistant, the integration uses passive BLE advertisements by default, with an “active” Bluetooth mode available for devices that store some data (such as battery level for some meters) only in service data accessed via a connection.\nCrucially, no cloud connectivity is required: data flows device → Bluetooth → Home Assistant locally, which means readings keep working during internet outages and remain on your network. The SwitchBot app/cloud is optional and only adds remote access, longer history retention, derived‑value push alerts, and Matter bridging via a Hub.\nFor sensors using SwitchBot’s encrypted BLE protocol (Lock, Lock Pro, certain newer devices) Home Assistant requires a key ID + encryption key, which can either be entered manually or imported by signing into a SwitchBot account through the integration. The basic Meter and Meter Plus do not require this; the Meter Pro CO2 Monitor is one of the encrypted models.\n2.4 Why these meters are a good choice for an HA dashboard Synthesizing the SwitchBot product pages and the third‑party reviews:\nLocal, hub‑less Home Assistant integration over BLE — no SwitchBot Hub required for temperature/humidity/battery to appear in HA. Industrial‑grade Sensirion sensors with quoted accuracy of ±0.2 °C / ±2 % RH (Meter Plus) and 4 Hz sampling. Bluetooth proxy support enables placement well beyond the host’s BLE range. Long battery life on AAA cells (~1 year for Meter Plus, up to ~2 years for the Indoor/Outdoor model in SwitchBot marketing) and IP65 rating on the outdoor unit, making it suitable for terraces, greenhouses, and even sauna/freezer testing per Creating Smart Home. Affordable — the Indoor/Outdoor Thermo‑Hygrometer retails at around USD $14.99 / EUR €19.99, the Meter Plus at a similar price point. Independent reviewers (SmartHomeScene, The Gadgeteer, Matter Alpha) consistently rate the readings as accurate against calibrated reference sensors (SmartHomeScene reports an average offset of about 0.35 % vs. a calibrated Xiaomi LYWSD02). Caveats to note in the post: SwitchBot’s marketing tightly couples advanced features (push alerts, dewpoint/VPD push notifications, cloud history \u003e 68 days, Matter) to a SwitchBot Hub, so a hub is needed if you want any of those — it is not needed for raw HA integration. Also, derived metrics like absolute humidity/dewpoint/VPD are not exposed natively as separate Home Assistant entities by the BLE integration; they are computed in SwitchBot’s app/cloud and would have to be calculated in Home Assistant via templates (e.g., a template sensor using temperature and humidity) if needed there.\n3. HACS overview — installing a custom card via the Frontend section 3.1 What HACS is The Home Assistant Community Store (HACS) is a third‑party add‑on/integration for Home Assistant that provides a UI for discovering, installing, and updating community custom integrations, frontend cards/themes, and other resources hosted on GitHub. It is not included in Home Assistant out of the box; users install HACS first (via the official documentation at hacs.xyz) and authorize it with a GitHub device login.\n3.2 Installing a custom card (general flow) Once HACS is installed and configured, the general procedure to install a custom Lovelace card is consistent across community guides (JuanMTech, BforBenny, the HACS docs) and matches the kalkih/mini-graph-card README:\nOpen HACS from the Home Assistant sidebar. Open the Frontend section (in HACS 1.x this is a tab labeled “Frontend”; in newer HACS releases all categories are visible from the main HACS screen). Click Explore \u0026 Download Repositories (the orange + button, typically bottom‑right). Search for the card by name (e.g., mini-graph-card, mushroom, button-card) and select the matching entry. Read the repository description page that opens, then click Download. In the version dialog, leave the latest version selected and click Download again. HACS pulls the JS bundle into config/www/community//, exposed at /hacsfiles//.js. Restart Home Assistant (or at minimum reload the frontend) so the new resource is loaded by Lovelace. Verify the resource is registered under Settings → Dashboards → Resources. Modern HACS versions add the resource entry automatically; if it is missing, manually add a JavaScript Module resource pointing at the /hacsfiles/... URL. Add the card to a dashboard either through the visual card picker (the new card type will appear in the “Custom” section once cached) or by editing YAML and using type: custom: (for example, type: custom:mini-graph-card). If the card does not appear in the picker right away, clear the browser cache and hard‑reload — this is a frequently reported gotcha in the Home Assistant Community (“HACS and mini_graph-card”, “Mini-graph-card Setup” threads).\n3.3 Updating and removing HACS shows updates for installed cards on its main dashboard; clicking Update downloads the new bundle and you simply refresh the browser (sometimes restart Home Assistant) for it to take effect. Removing a card is similarly done from HACS, after which you should also delete the manual resource entry in Settings → Dashboards → Resources if it was added manually, and remove any custom: cards from your Lovelace YAML to avoid render errors.\nSources of conflict / caveats noted while researching The kalkih/mini-graph-card README in places still shows pre‑2023 navigation labels (e.g., “Configuration → Lovelace Dashboards → Resources Tab”) which in modern Home Assistant is Settings → Dashboards → Resources. The functionality is identical; only the menu wording has changed. HACS has restructured its UI multiple times. Community guides written before mid‑2024 often refer explicitly to a “Frontend” tab; recent HACS versions consolidate categories on a single page but the install procedure (Explore \u0026 Download Repositories → search → Download → restart) is unchanged. Some older Home Assistant Community posts describe MQTT‑based or REST/cloud‑based integrations of SwitchBot meters (sbm2mqtt, the OpenAPI rest_command approach). These predate, and are now superseded by, the official SwitchBot Bluetooth integration in Home Assistant, which the maintainers and reviewers explicitly recommend. A handful of users report intermittent unavailable battery sensors specifically on the SwitchBot Meter Plus with the BLE integration; temperature and humidity still update normally. This is documented in the Home Assistant Community thread “Switchbot Meter Plus battery sensor unavailable” but is not reported for the regular Meter or the Indoor/Outdoor model. SwitchBot’s own marketing pages quote both “±0.2 °C / ±2 % RH” (Meter Plus product page) and “±0.36 °F / ±1.8 % RH” (Indoor/Outdoor product page) for what is essentially the same sensor family; these are the manufacturer’s own figures, not independently verified, so the post should attribute them as such. The exact device referenced by https://smarthomeindex.com/?deviceId=cac98b86-c500-4aea-bbe6-81ffad793cb6 could not be confirmed by direct retrieval during this research; the Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer details above are sourced from SwitchBot’s official product pages and reputable independent reviews instead. ",
+  "wordCount" : "2623",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Tom Cocking"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/research-mini-graph-card-temperature-humidity-home-assistant.md/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ExitCode0",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="ExitCode0 (Alt + H)">ExitCode0</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://datasolace.com/" title="DataSolace">
+                    <span>DataSolace</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/privacy/" title="Privacy">
+                    <span>Privacy</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      
+    </h1>
+    <div class="post-meta"><span>13 min</span>&nbsp;·&nbsp;<span>Tom Cocking</span>
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#research-brief-mini-graph-card-switchbot-meter-plus--indooroutdoor-thermohygrometer-and-hacs-installation" aria-label="Research Brief: mini-graph-card, SwitchBot Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer, and HACS Installation">Research Brief: mini-graph-card, SwitchBot Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer, and HACS Installation</a><ul>
+                        
+                <li>
+                    <a href="#1-mini-graph-card-kalkihmini-graph-card" aria-label="1. mini-graph-card (kalkih/mini-graph-card)">1. mini-graph-card (kalkih/mini-graph-card)</a><ul>
+                        
+                <li>
+                    <a href="#11-what-it-does" aria-label="1.1 What it does">1.1 What it does</a></li>
+                <li>
+                    <a href="#12-key-features" aria-label="1.2 Key features">1.2 Key features</a></li>
+                <li>
+                    <a href="#13-installation-via-hacs--exact-steps" aria-label="1.3 Installation via HACS — exact steps">1.3 Installation via HACS — exact steps</a></li>
+                <li>
+                    <a href="#14-key-configuration-options-for-this-post" aria-label="1.4 Key configuration options for this post">1.4 Key configuration options for this post</a></li></ul>
+                </li>
+                <li>
+                    <a href="#2-switchbot-meter-plus-and-indooroutdoor-thermohygrometer-in-home-assistant" aria-label="2. SwitchBot Meter Plus and Indoor/Outdoor Thermo‑Hygrometer in Home Assistant">2. SwitchBot Meter Plus and Indoor/Outdoor Thermo‑Hygrometer in Home Assistant</a><ul>
+                        
+                <li>
+                    <a href="#21-what-sensors-do-they-provide" aria-label="2.1 What sensors do they provide?">2.1 What sensors do they provide?</a></li>
+                <li>
+                    <a href="#22-native-home-assistant-integration" aria-label="2.2 Native Home Assistant integration">2.2 Native Home Assistant integration</a></li>
+                <li>
+                    <a href="#23-bluetooth-local-polling-and-cloud" aria-label="2.3 Bluetooth, local polling, and cloud">2.3 Bluetooth, local polling, and cloud</a></li>
+                <li>
+                    <a href="#24-why-these-meters-are-a-good-choice-for-an-ha-dashboard" aria-label="2.4 Why these meters are a good choice for an HA dashboard">2.4 Why these meters are a good choice for an HA dashboard</a></li></ul>
+                </li>
+                <li>
+                    <a href="#3-hacs-overview--installing-a-custom-card-via-the-frontend-section" aria-label="3. HACS overview — installing a custom card via the Frontend section">3. HACS overview — installing a custom card via the Frontend section</a><ul>
+                        
+                <li>
+                    <a href="#31-what-hacs-is" aria-label="3.1 What HACS is">3.1 What HACS is</a></li>
+                <li>
+                    <a href="#32-installing-a-custom-card-general-flow" aria-label="3.2 Installing a custom card (general flow)">3.2 Installing a custom card (general flow)</a></li>
+                <li>
+                    <a href="#33-updating-and-removing" aria-label="3.3 Updating and removing">3.3 Updating and removing</a></li></ul>
+                </li>
+                <li>
+                    <a href="#sources-of-conflict--caveats-noted-while-researching" aria-label="Sources of conflict / caveats noted while researching">Sources of conflict / caveats noted while researching</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="research-brief-mini-graph-card-switchbot-meter-plus--indooroutdoor-thermohygrometer-and-hacs-installation">Research Brief: mini-graph-card, SwitchBot Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer, and HACS Installation<a hidden class="anchor" aria-hidden="true" href="#research-brief-mini-graph-card-switchbot-meter-plus--indooroutdoor-thermohygrometer-and-hacs-installation">#</a></h1>
+<p>This brief consolidates factual, sourced information for a technical blog post combining the <strong>kalkih/mini-graph-card</strong> custom Lovelace card with <strong>SwitchBot</strong> temperature/humidity sensors in <strong>Home Assistant</strong>, installed via <strong>HACS</strong>.</p>
+<hr>
+<h2 id="1-mini-graph-card-kalkihmini-graph-card">1. mini-graph-card (kalkih/mini-graph-card)<a hidden class="anchor" aria-hidden="true" href="#1-mini-graph-card-kalkihmini-graph-card">#</a></h2>
+<h3 id="11-what-it-does">1.1 What it does<a hidden class="anchor" aria-hidden="true" href="#11-what-it-does">#</a></h3>
+<p>Mini Graph Card is a minimalistic, customizable graph card for the Home Assistant Lovelace UI authored by <strong>kalkih</strong>. It works with entities from the <code>sensor</code> and <code>binary_sensor</code> domains and renders both the entity&rsquo;s current state and a line (or bar) graph representation of its recorded history. The project is MIT‑licensed and at the time of writing the latest stable release is <strong>v0.13.0</strong> (released 29 May 2025), with roughly 3.7–3.8k stars on GitHub.</p>
+<p>Conceptually, the card retrieves history from Home Assistant&rsquo;s recorder, groups recorded values into time buckets defined by <code>group_by</code> and <code>points_per_hour</code>, and then collapses each bucket into a single point or bar using an aggregate function (e.g., <code>avg</code>, <code>min</code>, <code>max</code>).</p>
+<h3 id="12-key-features">1.2 Key features<a hidden class="anchor" aria-hidden="true" href="#12-key-features">#</a></h3>
+<p>Drawing from the official README, the card offers:</p>
+<ul>
+<li><strong>Multiple entities on one graph</strong>, with per‑entity colors, names, units, and aggregate functions.</li>
+<li><strong>Line, bar, and &ldquo;fill&rdquo; rendering modes</strong>, with optional smoothing and configurable line width.</li>
+<li><strong>Dynamic line coloring</strong> via <code>color_thresholds</code> (with optional linear interpolation of stops and <code>smooth</code>/<code>hard</code> transitions).</li>
+<li><strong>Primary and secondary Y‑axes</strong>, including soft/hard upper and lower bounds and a <code>min_bound_range</code> to prevent tiny variations from being exaggerated.</li>
+<li><strong>Flexible time windows</strong> through <code>hours_to_show</code> and <code>points_per_hour</code> (governing graph detail/smoothing).</li>
+<li><strong>Aggregate functions</strong>: <code>avg</code>, <code>median</code>, <code>min</code>, <code>max</code>, <code>first</code>, <code>last</code>, <code>sum</code>, <code>delta</code> (max − min), <code>diff</code> (last − first).</li>
+<li><strong>State display options</strong> including the current state, average, extrema, legend, Y‑axis labels, and per‑entity show/hide of state, line, fill, points, and legend.</li>
+<li><strong>Show/hide UI elements</strong> (<code>name</code>, <code>icon</code>, <code>state</code>, <code>graph</code>, <code>fill</code>, <code>points</code>, <code>legend</code>, <code>average</code>, <code>extrema</code>, <code>labels</code>, <code>labels_secondary</code>, <code>loading_indicator</code>).</li>
+<li><strong>Tap actions</strong> (<code>more-info</code>, <code>navigate</code>, <code>call-service</code>, <code>url</code>, <code>none</code>).</li>
+<li><strong>Local browser caching</strong> of history (<code>cache: true</code> by default) and a configurable <code>update_interval</code> (in seconds) instead of every state change.</li>
+<li><strong>Logarithmic scale</strong>, <strong>state_map</strong> for non‑numeric/binary sensors, <strong>value_factor</strong> scaling, and <strong>attribute access</strong> including dot‑notation traversal of dictionary and list attributes.</li>
+</ul>
+<h3 id="13-installation-via-hacs--exact-steps">1.3 Installation via HACS — exact steps<a hidden class="anchor" aria-hidden="true" href="#13-installation-via-hacs--exact-steps">#</a></h3>
+<p>The official README states the card is available in HACS (Home Assistant Community Store), noting that <em>&ldquo;HACS is a third party community store and is not included in Home Assistant out of the box.&rdquo;</em></p>
+<p>The standard HACS flow for this card is:</p>
+<ol>
+<li>Open <strong>Home Assistant → HACS</strong> in the sidebar.</li>
+<li>Open the <strong>Frontend</strong> section (in HACS 2.x this list is unified under &ldquo;Custom repositories&rdquo;/the main HACS view, but the card appears in the same place either way).</li>
+<li>Click <strong>Explore &amp; Download Repositories</strong> (the &ldquo;+&rdquo; button at the bottom right).</li>
+<li>Search for <strong>&ldquo;mini-graph-card&rdquo;</strong> and select the entry by <strong>kalkih</strong>.</li>
+<li>Click <strong>Download</strong>, confirm the version in the dialog, and click <strong>Download</strong> again. HACS places the bundle at <code>config/www/community/mini-graph-card/mini-graph-card-bundle.js</code> (referenced in Home Assistant as <code>/hacsfiles/mini-graph-card/mini-graph-card-bundle.js</code>).</li>
+<li><strong>Restart Home Assistant</strong> (or reload the frontend resources) so the new card is registered.</li>
+<li><strong>Add the resource reference</strong> if it is not added automatically (HACS does this for most modern installs, but the README gives explicit instructions for both YAML and UI):
+<ul>
+<li><strong>YAML</strong>: in <code>configuration.yaml</code>,
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">resources</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">url</span>: <span style="color:#ae81ff">/hacsfiles/mini-graph-card/mini-graph-card-bundle.js</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">type</span>: <span style="color:#ae81ff">module</span>
+</span></span></code></pre></div></li>
+<li><strong>UI</strong>: enable advanced mode in your user profile, then go to <strong>Settings → Dashboards → Resources</strong> (the README phrases this as <em>Configuration → Lovelace Dashboards → Resources Tab</em>), click the orange <strong>+</strong>, set URL to <code>/hacsfiles/mini-graph-card/mini-graph-card-bundle.js</code>, and select type <strong>JavaScript Module</strong>.</li>
+</ul>
+</li>
+<li>Add a manual card in your dashboard with <code>type: custom:mini-graph-card</code>.</li>
+</ol>
+<p>The README explicitly notes for HACS users: <em>&ldquo;Use <code>/hacsfiles/mini-graph-card/mini-graph-card-bundle.js</code> and select &lsquo;JavaScript Module&rsquo; for HACS install.&rdquo;</em></p>
+<h3 id="14-key-configuration-options-for-this-post">1.4 Key configuration options for this post<a hidden class="anchor" aria-hidden="true" href="#14-key-configuration-options-for-this-post">#</a></h3>
+<p>The following are taken directly from the project&rsquo;s README option tables.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Option</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Scope</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>show_state</code></td>
+          <td>boolean</td>
+          <td>—</td>
+          <td>Entity (and <code>show:</code> block)</td>
+          <td>Display the entity&rsquo;s current state. Set <code>true</code> on a per‑entity basis when graphing multiple sensors so each value is visible in the legend area. In <code>show:</code>, the corresponding <code>state</code> flag accepts <code>true</code>, <code>false</code>, or <code>last</code> (where <code>last</code> shows the value of the last graph point).</td>
+      </tr>
+      <tr>
+          <td><code>color_thresholds</code></td>
+          <td>list of <code>{value, color}</code> objects</td>
+          <td>—</td>
+          <td>Card</td>
+          <td>Defines threshold stops for dynamic graph coloring. With <code>color_thresholds_transition: smooth</code> (default) values blend; with <code>hard</code>, the color switches abruptly. Intermediate stops can omit <code>value</code>, in which case they are interpolated linearly between the surrounding stops. Useful for things like coloring a humidity graph green between 40–60% and red below or above.</td>
+      </tr>
+      <tr>
+          <td><code>y_axis: secondary</code></td>
+          <td>string</td>
+          <td>—</td>
+          <td>Entity</td>
+          <td>Routes that entity to the right‑hand secondary Y‑axis instead of the default left axis. Pair with <code>lower_bound_secondary</code>, <code>upper_bound_secondary</code>, <code>min_bound_range_secondary</code>, and <code>show.labels_secondary</code> for proper scaling. The README&rsquo;s <em>Alternate y‑axis</em> example mixes a &ldquo;Night&rdquo; indicator on the secondary axis with three temperature sensors on the primary axis.</td>
+      </tr>
+      <tr>
+          <td><code>decimals</code></td>
+          <td>integer</td>
+          <td>—</td>
+          <td>Card</td>
+          <td>Forces the exact number of decimals shown for displayed states (does not affect data resolution, only rendering).</td>
+      </tr>
+      <tr>
+          <td><code>hours_to_show</code></td>
+          <td>integer</td>
+          <td><code>24</code></td>
+          <td>Card</td>
+          <td>How many hours of history the graph covers. Common values: <code>24</code> (1 day), <code>72</code> (3 days), <code>168</code> (1 week).</td>
+      </tr>
+      <tr>
+          <td><code>aggregate_func</code></td>
+          <td>string</td>
+          <td><code>avg</code></td>
+          <td>Card or per‑entity</td>
+          <td>Method used to collapse each time bucket into a point: <code>avg</code>, <code>median</code>, <code>min</code>, <code>max</code>, <code>first</code>, <code>last</code>, <code>sum</code>, <code>delta</code>, <code>diff</code>. Set per‑entity to plot, e.g., daily min/max/avg of the same temperature sensor on one graph.</td>
+      </tr>
+      <tr>
+          <td><code>points_per_hour</code></td>
+          <td>number</td>
+          <td><code>0.5</code></td>
+          <td>Card</td>
+          <td>Number of data points to display per hour — effectively the detail / smoothing of the graph. Higher values (e.g., <code>60</code>) give near‑realtime detail for short windows; lower values (e.g., <code>0.25</code>) smooth out long windows like a week of data.</td>
+      </tr>
+  </tbody>
+</table>
+<p>The README&rsquo;s <em>Show data from the past week</em> example uses <code>hours_to_show: 168</code> with <code>points_per_hour: 0.25</code>; the <em>Data aggregation functions</em> example combines per‑entity <code>aggregate_func: max/min/avg</code> with <code>group_by: date</code>; and the <em>Dynamic line color</em> example shows <code>color_thresholds</code> for a temperature sensor:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">color_thresholds</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">value</span>: <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">color</span>: <span style="color:#e6db74">&#34;#f39c12&#34;</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">value</span>: <span style="color:#ae81ff">21</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">color</span>: <span style="color:#e6db74">&#34;#d35400&#34;</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">value</span>: <span style="color:#ae81ff">21.5</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">color</span>: <span style="color:#e6db74">&#34;#c0392b&#34;</span>
+</span></span></code></pre></div><hr>
+<h2 id="2-switchbot-meter-plus-and-indooroutdoor-thermohygrometer-in-home-assistant">2. SwitchBot Meter Plus and Indoor/Outdoor Thermo‑Hygrometer in Home Assistant<a hidden class="anchor" aria-hidden="true" href="#2-switchbot-meter-plus-and-indooroutdoor-thermohygrometer-in-home-assistant">#</a></h2>
+<p>The <code>smarthomeindex.com</code> URL referenced in the brief was not directly retrievable, so the information below is drawn from SwitchBot&rsquo;s official product pages, the official Home Assistant SwitchBot documentation, and independent reviews (SmartHomeScene, The Gadgeteer, Matter Alpha, Creating Smart Home, TechHive).</p>
+<h3 id="21-what-sensors-do-they-provide">2.1 What sensors do they provide?<a hidden class="anchor" aria-hidden="true" href="#21-what-sensors-do-they-provide">#</a></h3>
+<p><strong>SwitchBot Meter Plus (indoor thermo‑hygrometer):</strong></p>
+<ul>
+<li>Temperature and relative humidity, sampled by a Swiss‑made (Sensirion) sensor at roughly 4 readings per second.</li>
+<li>Manufacturer‑quoted accuracy: ±0.2 °C / ±0.4 °F for temperature and ±2% RH for humidity (the broader datasheet range cited by SwitchBot is up to ±1.8% RH and ±0.36 °F).</li>
+<li>A 3‑inch monochrome LCD with a comfort indicator (dry/comfort/wet) and battery icon.</li>
+<li>Derived metrics — <strong>dewpoint, vapor‑pressure deficit (VPD), and absolute humidity</strong> — are computed by the SwitchBot app/cloud and require a SwitchBot Hub for push notifications based on those derived values.</li>
+</ul>
+<p><strong>SwitchBot Indoor/Outdoor Thermo‑Hygrometer (Meter Outdoor):</strong></p>
+<ul>
+<li>Temperature and relative humidity from the same Swiss Sensirion sensor with a 4‑second sampling interval.</li>
+<li>Specified operating range −20 °C to 60 °C; SwitchBot indicates it can read down to −30 °C / up to 80 °C in practice (per the <em>Creating Smart Home</em> review).</li>
+<li><strong>IP65</strong> dust/water resistance, AAA × 2 batteries, manufacturer‑quoted up to ~2 years battery life, lanyard included for hanging.</li>
+<li>No built‑in display — readings are seen via a paired Meter Plus / Hub 2 / Meter Pro display, or via an app/integration. Same dewpoint/VPD/absolute humidity metrics when paired with a SwitchBot Hub.</li>
+</ul>
+<p>When integrated into Home Assistant via the SwitchBot Bluetooth integration, the entities exposed for these meter‑class devices are typically: <strong>temperature</strong>, <strong>humidity</strong>, <strong>battery</strong>, and <strong>Bluetooth signal strength (RSSI)</strong>. (The Meter Pro CO2 Monitor adds a CO₂ sensor, and certain users have reported the Meter Plus battery sensor as occasionally <code>unavailable</code> — see the linked Home Assistant Community thread — but temperature and humidity work reliably.)</p>
+<h3 id="22-native-home-assistant-integration">2.2 Native Home Assistant integration<a hidden class="anchor" aria-hidden="true" href="#22-native-home-assistant-integration">#</a></h3>
+<p>The official <strong>SwitchBot integration</strong> in Home Assistant is a Bluetooth integration. Per the official documentation:</p>
+<ul>
+<li><em>&ldquo;In order to use this integration, it is required to have working Bluetooth set up on the device running Home Assistant. <strong>A SwitchBot Hub is not required for this integration.</strong>&rdquo;</em></li>
+<li>The Meter, Meter Plus, Indoor/Outdoor Thermo‑Hygrometer, and Meter Pro (CO2 Monitor) are all auto‑discovered by Home Assistant as Bluetooth devices, exposing temperature, humidity (and CO₂ for the Meter Pro CO2), plus battery and signal strength.</li>
+<li>Bluetooth range can be extended using <strong>Home Assistant Bluetooth proxies</strong> (e.g., ESPHome on an ESP32, or a Shelly Bluetooth Gateway), which is the recommended approach for outdoor sensors placed beyond the range of the host&rsquo;s Bluetooth radio.</li>
+<li>A SwitchBot Hub is <em>only</em> required for cloud features such as remote access, long‑term cloud history, derived‑value alerts, and Matter exposure (via Hub 2 / Hub 3 / Hub Mini Matter).</li>
+</ul>
+<p>The Home Assistant Community forum has historically also documented an alternative <strong>MQTT path</strong> (e.g., <code>sbm2mqtt</code>) that scrapes BLE advertisements from a Pi and publishes them to MQTT, but the project README itself notes the official Bluetooth integration is now the recommended, simpler method:</p>
+<blockquote>
+<p><em>&ldquo;UPDATE — The Home Assistant SwitchBot Bluetooth integration now supports Meters. That along with Bluetooth proxies is a much simpler way to bring your Meters into Home Assistant. I now recommend that you use that method instead.&rdquo;</em> — Home Assistant Community, &ldquo;SwitchBot Meter Temperature &amp; Humidity &hellip; with Home Assistant&rdquo;.</p>
+</blockquote>
+<h3 id="23-bluetooth-local-polling-and-cloud">2.3 Bluetooth, local polling, and cloud<a hidden class="anchor" aria-hidden="true" href="#23-bluetooth-local-polling-and-cloud">#</a></h3>
+<p>SwitchBot meters communicate over <strong>Bluetooth Low Energy (BLE 4.2 or above)</strong> with a manufacturer‑specified open‑air range of roughly 120 m / 394 ft. In Home Assistant, the integration uses <strong>passive BLE advertisements by default</strong>, with an &ldquo;active&rdquo; Bluetooth mode available for devices that store some data (such as battery level for some meters) only in service data accessed via a connection.</p>
+<p>Crucially, no cloud connectivity is required: data flows <strong>device → Bluetooth → Home Assistant locally</strong>, which means readings keep working during internet outages and remain on your network. The SwitchBot app/cloud is optional and only adds remote access, longer history retention, derived‑value push alerts, and Matter bridging via a Hub.</p>
+<p>For sensors using SwitchBot&rsquo;s encrypted BLE protocol (Lock, Lock Pro, certain newer devices) Home Assistant requires a key ID + encryption key, which can either be entered manually or imported by signing into a SwitchBot account through the integration. The basic Meter and Meter Plus do not require this; the Meter Pro CO2 Monitor is one of the encrypted models.</p>
+<h3 id="24-why-these-meters-are-a-good-choice-for-an-ha-dashboard">2.4 Why these meters are a good choice for an HA dashboard<a hidden class="anchor" aria-hidden="true" href="#24-why-these-meters-are-a-good-choice-for-an-ha-dashboard">#</a></h3>
+<p>Synthesizing the SwitchBot product pages and the third‑party reviews:</p>
+<ul>
+<li><strong>Local, hub‑less Home Assistant integration</strong> over BLE — no SwitchBot Hub required for temperature/humidity/battery to appear in HA.</li>
+<li><strong>Industrial‑grade Sensirion sensors</strong> with quoted accuracy of ±0.2 °C / ±2 % RH (Meter Plus) and 4 Hz sampling.</li>
+<li><strong>Bluetooth proxy support</strong> enables placement well beyond the host&rsquo;s BLE range.</li>
+<li><strong>Long battery life on AAA cells</strong> (~1 year for Meter Plus, up to ~2 years for the Indoor/Outdoor model in SwitchBot marketing) and IP65 rating on the outdoor unit, making it suitable for terraces, greenhouses, and even sauna/freezer testing per <em>Creating Smart Home</em>.</li>
+<li><strong>Affordable</strong> — the Indoor/Outdoor Thermo‑Hygrometer retails at around USD $14.99 / EUR €19.99, the Meter Plus at a similar price point.</li>
+<li>Independent reviewers (SmartHomeScene, The Gadgeteer, Matter Alpha) consistently rate the readings as accurate against calibrated reference sensors (SmartHomeScene reports an average offset of about 0.35 % vs. a calibrated Xiaomi LYWSD02).</li>
+</ul>
+<p>Caveats to note in the post: SwitchBot&rsquo;s marketing tightly couples advanced features (push alerts, dewpoint/VPD push notifications, cloud history &gt; 68 days, Matter) to a SwitchBot Hub, so a hub is needed if you want any of those — it is not needed for raw HA integration. Also, derived metrics like absolute humidity/dewpoint/VPD are not exposed natively as separate Home Assistant entities by the BLE integration; they are computed in SwitchBot&rsquo;s app/cloud and would have to be calculated in Home Assistant via templates (e.g., a <code>template</code> sensor using temperature and humidity) if needed there.</p>
+<hr>
+<h2 id="3-hacs-overview--installing-a-custom-card-via-the-frontend-section">3. HACS overview — installing a custom card via the Frontend section<a hidden class="anchor" aria-hidden="true" href="#3-hacs-overview--installing-a-custom-card-via-the-frontend-section">#</a></h2>
+<h3 id="31-what-hacs-is">3.1 What HACS is<a hidden class="anchor" aria-hidden="true" href="#31-what-hacs-is">#</a></h3>
+<p>The <strong>Home Assistant Community Store (HACS)</strong> is a third‑party add‑on/integration for Home Assistant that provides a UI for discovering, installing, and updating community <strong>custom integrations</strong>, <strong>frontend cards/themes</strong>, and other resources hosted on GitHub. It is <strong>not</strong> included in Home Assistant out of the box; users install HACS first (via the official documentation at hacs.xyz) and authorize it with a GitHub device login.</p>
+<h3 id="32-installing-a-custom-card-general-flow">3.2 Installing a custom card (general flow)<a hidden class="anchor" aria-hidden="true" href="#32-installing-a-custom-card-general-flow">#</a></h3>
+<p>Once HACS is installed and configured, the general procedure to install a custom Lovelace card is consistent across community guides (JuanMTech, BforBenny, the HACS docs) and matches the kalkih/mini-graph-card README:</p>
+<ol>
+<li><strong>Open HACS</strong> from the Home Assistant sidebar.</li>
+<li><strong>Open the Frontend section</strong> (in HACS 1.x this is a tab labeled &ldquo;Frontend&rdquo;; in newer HACS releases all categories are visible from the main HACS screen).</li>
+<li>Click <strong>Explore &amp; Download Repositories</strong> (the orange <strong>+</strong> button, typically bottom‑right).</li>
+<li><strong>Search</strong> for the card by name (e.g., <code>mini-graph-card</code>, <code>mushroom</code>, <code>button-card</code>) and select the matching entry.</li>
+<li>Read the repository description page that opens, then click <strong>Download</strong>.</li>
+<li>In the version dialog, leave the latest version selected and click <strong>Download</strong> again. HACS pulls the JS bundle into <code>config/www/community/&lt;repo-name&gt;/</code>, exposed at <code>/hacsfiles/&lt;repo-name&gt;/&lt;bundle&gt;.js</code>.</li>
+<li><strong>Restart Home Assistant</strong> (or at minimum reload the frontend) so the new resource is loaded by Lovelace.</li>
+<li><strong>Verify the resource is registered</strong> under <strong>Settings → Dashboards → Resources</strong>. Modern HACS versions add the resource entry automatically; if it is missing, manually add a JavaScript Module resource pointing at the <code>/hacsfiles/...</code> URL.</li>
+<li><strong>Add the card</strong> to a dashboard either through the visual card picker (the new card type will appear in the &ldquo;Custom&rdquo; section once cached) or by editing YAML and using <code>type: custom:&lt;card-name&gt;</code> (for example, <code>type: custom:mini-graph-card</code>).</li>
+</ol>
+<p>If the card does not appear in the picker right away, clear the browser cache and hard‑reload — this is a frequently reported gotcha in the Home Assistant Community (&ldquo;HACS and mini_graph-card&rdquo;, &ldquo;Mini-graph-card Setup&rdquo; threads).</p>
+<h3 id="33-updating-and-removing">3.3 Updating and removing<a hidden class="anchor" aria-hidden="true" href="#33-updating-and-removing">#</a></h3>
+<p>HACS shows updates for installed cards on its main dashboard; clicking <strong>Update</strong> downloads the new bundle and you simply refresh the browser (sometimes restart Home Assistant) for it to take effect. Removing a card is similarly done from HACS, after which you should also delete the manual resource entry in <strong>Settings → Dashboards → Resources</strong> if it was added manually, and remove any <code>custom:</code> cards from your Lovelace YAML to avoid render errors.</p>
+<hr>
+<h2 id="sources-of-conflict--caveats-noted-while-researching">Sources of conflict / caveats noted while researching<a hidden class="anchor" aria-hidden="true" href="#sources-of-conflict--caveats-noted-while-researching">#</a></h2>
+<ul>
+<li>The kalkih/mini-graph-card README in places still shows pre‑2023 navigation labels (e.g., <em>&ldquo;Configuration → Lovelace Dashboards → Resources Tab&rdquo;</em>) which in modern Home Assistant is <strong>Settings → Dashboards → Resources</strong>. The functionality is identical; only the menu wording has changed.</li>
+<li>HACS has restructured its UI multiple times. Community guides written before mid‑2024 often refer explicitly to a &ldquo;Frontend&rdquo; tab; recent HACS versions consolidate categories on a single page but the install procedure (Explore &amp; Download Repositories → search → Download → restart) is unchanged.</li>
+<li>Some older Home Assistant Community posts describe MQTT‑based or REST/cloud‑based integrations of SwitchBot meters (<code>sbm2mqtt</code>, the OpenAPI rest_command approach). These predate, and are now superseded by, the official SwitchBot Bluetooth integration in Home Assistant, which the maintainers and reviewers explicitly recommend.</li>
+<li>A handful of users report intermittent <code>unavailable</code> battery sensors specifically on the <strong>SwitchBot Meter Plus</strong> with the BLE integration; temperature and humidity still update normally. This is documented in the Home Assistant Community thread &ldquo;Switchbot Meter Plus battery sensor unavailable&rdquo; but is not reported for the regular Meter or the Indoor/Outdoor model.</li>
+<li>SwitchBot&rsquo;s own marketing pages quote <em>both</em> &ldquo;±0.2 °C / ±2 % RH&rdquo; (Meter Plus product page) and &ldquo;±0.36 °F / ±1.8 % RH&rdquo; (Indoor/Outdoor product page) for what is essentially the same sensor family; these are the manufacturer&rsquo;s own figures, not independently verified, so the post should attribute them as such.</li>
+<li>The exact device referenced by <code>https://smarthomeindex.com/?deviceId=cac98b86-c500-4aea-bbe6-81ffad793cb6</code> could not be confirmed by direct retrieval during this research; the Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer details above are sourced from SwitchBot&rsquo;s official product pages and reputable independent reviews instead.</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/copy-paste-with-powershell-sendkeys/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>&#39;Copy, Paste&#39; With Powershell Sendkeys</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">ExitCode0</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
