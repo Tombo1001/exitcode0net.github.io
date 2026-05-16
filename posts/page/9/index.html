@@ -344,6 +344,40 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Modifying Windows shortcuts is Powershell
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I once faced a rather tedious task that involved recursively modifying a number of shortcut paths stored across a convoluted folder structure. There was approximately 100 shortcuts which needed part of their path modifying.
+The answer: Create a****PowerShell script.
+The following code utilises regex to check for the existence of a string and modify with the define replacement. It is easily possible to use Read-Host to make this a little bit more interactive, but the purposes of my use-case it was just as simple to modify these variables before running the script.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-02-13 09:00:15 +0000 UTC'>February 13, 2019</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Tom</span></footer>
+  <a class="entry-link" aria-label="post link to Modifying Windows shortcuts is Powershell" href="http://localhost:1313/posts/modifying-windows-shortcuts-is-powershell/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Powershell - Checking the Language Mode
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>For security purposes, it is possible to control the language mode in a given Powershell session. These language modes can constrict which modules can be loaded during the life of a powershell session.
+Learn mode about Powershell langeuage modes: About Language Modes – Microsoft
+Detect the Current Language Mode $sLangMode: $ExecutionContext.SessionState.LanguageMode
+If ($sLangMode -ne “FullLanguage”){
+Write-Host ” !! Unable to run scrit – Powershell Using Wrong Language Mode !! ”
+}
+Else{
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-02-05 09:00:49 +0000 UTC'>February 5, 2019</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Tom</span></footer>
+  <a class="entry-link" aria-label="post link to Powershell - Checking the Language Mode" href="http://localhost:1313/posts/powershell-checking-the-language-mode/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">&#39;Copy, Paste&#39; With Powershell Sendkeys
     </h2>
   </header>
@@ -354,20 +388,6 @@ Perhaps it is a case of a website which prevents text form being sent to a field
   </div>
   <footer class="entry-footer"><span title='2019-02-02 22:17:39 +0000 UTC'>February 2, 2019</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Tom</span></footer>
   <a class="entry-link" aria-label="post link to &#39;Copy, Paste&#39; With Powershell Sendkeys" href="http://localhost:1313/posts/copy-paste-with-powershell-sendkeys/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Research Brief: mini-graph-card, SwitchBot Meter Plus / Indoor‑Outdoor Thermo‑Hygrometer, and HACS Installation This brief consolidates factual, sourced information for a technical blog post combining the kalkih/mini-graph-card custom Lovelace card with SwitchBot temperature/humidity sensors in Home Assistant, installed via HACS.
-1. mini-graph-card (kalkih/mini-graph-card) 1.1 What it does Mini Graph Card is a minimalistic, customizable graph card for the Home Assistant Lovelace UI authored by kalkih. It works with entities from the sensor and binary_sensor domains and renders both the entity’s current state and a line (or bar) graph representation of its recorded history. The project is MIT‑licensed and at the time of writing the latest stable release is v0.13.0 (released 29 May 2025), with roughly 3.7–3.8k stars on GitHub.
-...</p>
-  </div>
-  <footer class="entry-footer"><span>13 min</span>&nbsp;·&nbsp;<span>Tom Cocking</span></footer>
-  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/posts/research-mini-graph-card-temperature-humidity-home-assistant.md/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
