@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Building a Dependency Audit Extension for Pi Agent - and What Mini Shai Hulud Taught Me About npm Supply Chains | ExitCode0</title>
+<meta name="keywords" content="npm supply chain attack, pi agent extension, dependency audit npm, mini shai hulud, npm advisory database, typescript extension pi agent">
+<meta name="description" content="I built a TypeScript extension for Pi Agent that audits installed npm packages against the advisory database on startup. Here&#39;s how it works, what it actually protects against, and where it falls short.">
+<meta name="author" content="Tom Cocking">
+<link rel="canonical" href="http://localhost:1313/posts/pi-agent-dep-audit-supply-chain/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fd5566c526ae48aadabd950798a2dc3568536401560eae5caac3765a42a9e7b5.css" integrity="sha256-/VVmxSauSKravZUHmKLcNWhTZAFWDq5cqsN2WkKp57U=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/pi-agent-dep-audit-supply-chain/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7745507566538945"
+    crossorigin="anonymous"></script>
+<style>
+ 
+.home-info ins.adsbygoogle,
+.home-info ins[data-ad-slot],
+.home-info ins,
+.first-entry ins.adsbygoogle,
+.first-entry ins[data-ad-slot],
+.first-entry ins {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+}
+</style>
+<script>
+ 
+(function () {
+    var BLOCKED = ['.home-info', '.first-entry'];
+
+    function purge(root) {
+        BLOCKED.forEach(function (sel) {
+            root.querySelectorAll(sel + ' ins').forEach(function (el) { el.remove(); });
+        });
+    }
+
+    function handleNode(node) {
+        if (node.nodeType !== 1) return;
+        BLOCKED.forEach(function (sel) {
+             
+            if (node.closest && node.closest(sel)) {
+                if (node.matches('ins')) { node.remove(); return; }
+                node.querySelectorAll('ins').forEach(function (el) { el.remove(); });
+            }
+             
+            if (node.matches && node.matches(sel)) { purge(node); }
+        });
+    }
+
+    var ob = new MutationObserver(function (mutations) {
+        mutations.forEach(function (m) {
+            m.addedNodes.forEach(handleNode);
+        });
+    });
+
+    function start() {
+        purge(document);
+        ob.observe(document.body, { childList: true, subtree: true });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+})();
+</script><script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+    data-id="exit" data-description="Support me on Buy me a coffee!" data-message="Buy me a coffee"
+    data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="165"></script><style>
+#cookie-notice {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 580px;
+    background: #2a2a2c;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+    color: rgba(255,255,255,0.82);
+    font-size: 0.875rem;
+    padding: 0.9rem 1.1rem;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+#cookie-notice span {
+    flex: 1;
+    line-height: 1.45;
+}
+#cookie-notice-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+#cookie-notice-accept,
+#cookie-notice-deny {
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    border-radius: 6px;
+    border: none;
+    text-decoration: none;
+    white-space: nowrap;
+}
+#cookie-notice-accept {
+    background: rgba(86,228,58,0.15);
+    color: rgb(86,228,58);
+    border: 1px solid rgba(86,228,58,0.35);
+}
+#cookie-notice-accept:hover {
+    background: rgba(86,228,58,0.25);
+}
+#cookie-notice-deny {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.12);
+}
+#cookie-notice-deny:hover {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.75);
+}
+#cookie-notice-more {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.38);
+    text-decoration: none;
+    white-space: nowrap;
+}
+#cookie-notice-more:hover {
+    color: rgba(255,255,255,0.6);
+}
+@media (max-width: 540px) {
+    #cookie-notice {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    #cookie-notice-buttons {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+</style>
+
+<div id="cookie-notice" style="display:none">
+    <span>We use analytics cookies to understand how this site is used. No data is collected without your consent.</span>
+    <div id="cookie-notice-buttons">
+        <a id="cookie-notice-accept">Accept</a>
+        <a id="cookie-notice-deny">Decline</a>
+        <a id="cookie-notice-more" href="/privacy">Privacy policy</a>
+    </div>
+</div>
+    <script>
+        function createCookie(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+        function eraseCookie(name) {
+            createCookie(name,"",-1);
+        }
+    
+        if(readCookie('cookie-notice-option')=='true') {
+            
+            
+            function loadScriptAsync(scriptSrc, callback) {
+                if (typeof callback !== 'function') {
+                    throw new Error('Not a valid callback for async script load');
+                }
+                var script = document.createElement('script');
+                script.onload = callback;
+                script.src = scriptSrc;
+                document.head.appendChild(script);
+            }
+    
+            loadScriptAsync('https://www.googletagmanager.com/gtag/js?id=G-EDE9MPZR9T', function () {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-EDE9MPZR9T', { 'anonymize_ip': true }); 
+            })
+    
+            
+        } else if (readCookie('cookie-notice-option')!='false'){
+            document.getElementById('cookie-notice').style.display = 'flex';
+        }
+    
+        document.getElementById('cookie-notice-accept').addEventListener("click",function() {
+            createCookie('cookie-notice-option','true',31);
+            document.getElementById('cookie-notice').style.display = 'none';
+            location.reload();
+        });
+    
+        document.getElementById('cookie-notice-deny').addEventListener("click",function() {
+            createCookie('cookie-notice-option','false',31);
+            document.getElementById('cookie-notice').style.display = 'none';
+            location.reload();
+        });
+    
+    </script>
+    <meta property="og:url" content="http://localhost:1313/posts/pi-agent-dep-audit-supply-chain/">
+  <meta property="og:site_name" content="ExitCode0">
+  <meta property="og:title" content="Building a Dependency Audit Extension for Pi Agent - and What Mini Shai Hulud Taught Me About npm Supply Chains">
+  <meta property="og:description" content="I built a TypeScript extension for Pi Agent that audits installed npm packages against the advisory database on startup. Here&#39;s how it works, what it actually protects against, and where it falls short.">
+  <meta property="og:locale" content="en-gb">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-05-21T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-05-21T00:00:00+00:00">
+    <meta property="article:tag" content="Pi-Agent">
+    <meta property="article:tag" content="Npm">
+    <meta property="article:tag" content="Security">
+    <meta property="article:tag" content="Supply-Chain">
+    <meta property="article:tag" content="Typescript">
+    <meta property="article:tag" content="Local-Ai">
+    <meta property="og:image" content="http://localhost:1313/images/pi-agent-dep-audit-supply-chain.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://localhost:1313/images/pi-agent-dep-audit-supply-chain.jpg">
+<meta name="twitter:title" content="Building a Dependency Audit Extension for Pi Agent - and What Mini Shai Hulud Taught Me About npm Supply Chains">
+<meta name="twitter:description" content="I built a TypeScript extension for Pi Agent that audits installed npm packages against the advisory database on startup. Here&#39;s how it works, what it actually protects against, and where it falls short.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Building a Dependency Audit Extension for Pi Agent - and What Mini Shai Hulud Taught Me About npm Supply Chains",
+      "item": "http://localhost:1313/posts/pi-agent-dep-audit-supply-chain/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Building a Dependency Audit Extension for Pi Agent - and What Mini Shai Hulud Taught Me About npm Supply Chains",
+  "name": "Building a Dependency Audit Extension for Pi Agent - and What Mini Shai Hulud Taught Me About npm Supply Chains",
+  "description": "I built a TypeScript extension for Pi Agent that audits installed npm packages against the advisory database on startup. Here's how it works, what it actually protects against, and where it falls short.",
+  "keywords": [
+    "npm supply chain attack", "pi agent extension", "dependency audit npm", "mini shai hulud", "npm advisory database", "typescript extension pi agent"
+  ],
+  "articleBody": "Last week, Microsoft’s Defender research team published details of an attack campaign they’re calling Mini Shai Hulud. A threat actor compromised maintainer accounts for the @antv npm organisation - the team behind popular charting libraries like G2 and G6 - and published malicious versions containing a 499 KB obfuscated payload that ran automatically during npm install. The blast radius was significant: echarts-for-react, one of the downstream dependents, has over a million weekly downloads. GitHub pulled 640 package versions and invalidated 61,274 npm tokens before it was contained.\nI’d been planning to build a dependency audit extension for Pi Agent anyway. Reading through that report made it feel a bit more urgent.\nThis post covers what I built, how it works, and - importantly - where advisory-based scanning actually helps and where it doesn’t. Mini Shai Hulud is a good case study for the latter.\nWhat’s a Supply Chain Attack, and Why Does npm Make Them Easy? If you already know this, skip ahead. If you’ve heard the term and not quite understood it, here’s the short version.\nWhen you install a package with npm install, you’re not just installing the code you asked for. You’re also installing everything that package depends on, and everything those packages depend on - a tree that can easily run to hundreds of packages for a single top-level dependency. Every node in that tree is a potential attack surface.\nThe attack doesn’t have to compromise the package’s source code. It can compromise the npm account of any maintainer in the tree. Once you control a maintainer account, you can publish a new version with malicious code added. Anyone whose project has that package as a (direct or transitive) dependency will pull in the backdoor the next time they run npm install.\nMini Shai Hulud used another trick on top of that: preinstall hooks. npm allows packages to declare shell commands that run automatically during installation - before you’ve even looked at the code. The attack payload executed the moment someone ran npm install in a project with the compromised packages.\nThat’s the important bit for what follows. The malicious code ran at install time, not at runtime. Your application never even had to launch.\nWhat I Built Pi Agent is a minimal terminal coding harness - think Claude Code but locally hosted against Ollama. I’ve written about its extension architecture previously; extensions are TypeScript modules that load at startup and can register tools, commands, and UI components.\nThe dep-audit extension I built does one thing: at startup, it queries the npm advisory database against every package installed under Pi’s own node_modules, and surfaces any known vulnerabilities directly in the Pi UI.\nHere’s what it looks like in practice - a widget that appears below the editor pane on launch:\n🔍 Dependency Audit pi-core: ✅ clean (312 packages checked) pi-packages (npm): 🔵 1 low - 45 packages checked /audit for full details and remediation Running /audit expands into a full report in the conversation:\n#### 🔵 LOW (1) - @mozilla/readability - Installed: 0.5.0 - Vulnerable versions: \u003c0.6.0 - Patched: \u003e=0.6.0 (v0.6.0 published — ✅ 443d old) - Advisory reported: 420d ago - @mozilla/readability Denial of Service through Regex - CWE: CWE-1333 - https://github.com/advisories/GHSA-3p6v-hrg8-8qj7 The patched version age is deliberate - I’ll explain why shortly.\nExample Of A Harmful Package So that readability package seemingly isn’t going to bring down our entire operation, but what would a package with bad dependency health look like? Well, I built a cursed helloworld extension that would allow us to see:\n{ \"name\": \"dep-audit-vuln-fixture\", \"version\": \"1.0.0\", \"description\": \"DEP-AUDIT TEST FIXTURE — lodash@4.17.4 pinned intentionally vulnerable for audit demo/testing\", \"dependencies\": { \"lodash\": \"4.17.4\" //BAD THINGS HERE } } And here is how our audit extension presents the review of our problematic dependencies:\nHow the Extension Works The Advisory API npm audit requires a lockfile, which globally installed tools like Pi don’t have. The workaround is querying npm’s advisory API directly:\nPOST https://registry.npmjs.org/-/npm/v1/security/advisories/bulk Content-Type: application/json { \"@mozilla/readability\": [\"0.5.0\"], \"some-other-package\": [\"1.2.3\"] } The API returns all known advisories matching those package/version combinations. No lockfile required. I walk Pi’s node_modules directories to collect the installed versions, batch them into a single request, and match the results against installed versions using a minimal semver range parser (npm’s advisory ranges don’t use caret or tilde, so about 30 lines covers it).\nWhat It Audits Pi installs packages in a few different places depending on how they were installed:\n~/.pi/agent/npm/node_modules/ - packages installed with pi install npm:... ~/.pi/agent/git/ - packages installed with pi install git:... ~/.pi/agent/extensions/*/ - directory-based extensions with their own package.json The Pi core package itself, found via npm root -g The extension finds all of these on startup and audits them in parallel.\nNon-Blocking Startup Pi starts up immediately - the audit runs in the background using a fire-and-forget pattern (void runAudit(ctx)), so there’s no delay on launch. The status line updates when the results come in:\npi.on(\"session_start\", async (_event, ctx) =\u003e { void runAudit(ctx); // fire and forget }); Patched Version Age This is the part most directly relevant to supply chain attacks. When an advisory has a patched version, the extension queries the npm registry to find out when that version was published:\nconst minPatched = extractMinPatchedVersion(advisory.patched_versions ?? \"\") ?? inferPatchedFromVulnerable(advisory.vulnerable_versions ?? \"\"); if (minPatched) { const publishedAt = await getVersionPublishDate(name, minPatched); const ageNote = publishedAt ? ` — ${ageLabel(daysAgo(publishedAt))}` : \"\"; const patchedLabel = advisory.patched_versions ?? `\u003e=${minPatched}`; out.push(` - Patched: \\`${patchedLabel}\\` (v${minPatched} published${ageNote})`); } The ageLabel function returns one of three things:\n⚠ only 2d old - too new to trust ⚠ 18d old - consider waiting ✅ 47d old The idea: if a “fix” was published yesterday, that’s not necessarily a safe thing to install. A common supply chain tactic is to compromise the patched version - publishing a legitimate-looking fix that carries a backdoor. Packages that have been public for several weeks with no reported issues are considerably safer. It’s not a guarantee, but it’s useful signal.\nWhat This Actually Protects Against Known vulnerabilities in installed packages. If Pi has a package installed that has an advisory filed against it, this surfaces it with severity, CVE IDs, CVSS score, and remediation steps. That’s the core value - it’s easy to install something and never check whether a vulnerability was later discovered.\nSuspiciously fresh “fixes”. The publish age display is a lightweight heuristic for the poisoned-patch pattern. If a patched version is very new, the audit flags it for your attention before you blindly upgrade.\nAwareness of what’s installed. The widget shows a package count per target even when everything is clean. Knowing that Pi-core has 312 packages in its dependency tree - and that they’re all clean - is itself useful.\nWhat This Does Not Protect Against Here’s where I want to be honest, because Mini Shai Hulud is a direct example of the limits.\nThe attack payload ran before any advisory existed. The malicious versions were published, they ran their preinstall hooks, and credentials were exfiltrated - all before GitHub pulled the packages and before any advisory was filed. Advisory-based scanning is reactive. There is no advisory for an attack that was discovered yesterday. The window between a compromised package being published and being flagged is exactly the window you’re most exposed.\nPreinstall hooks run at install time, not at runtime. Our extension audits what’s already installed. It doesn’t intercept what happens during npm install. Running npm install --ignore-scripts is the mitigation for preinstall hook attacks - but that requires you to know to do it before you install, and it can break packages that legitimately use install scripts.\nTransitive dependencies. If a package you depend on depends on a compromised package, our semver matching will catch it if there’s an advisory - but only if the advisory exists and if we correctly enumerate the full transitive tree. The tree walking is thorough but not guaranteed to catch every edge case in nested or hoisted installs.\nAccount compromise without a vulnerability. Mini Shai Hulud wasn’t a vulnerability in the code - it was a compromised maintainer account. There’s no CVE for “the maintainer got phished.” The advisory database only covers known security flaws, not supply chain integrity.\nThe Extension Code The full extension is about 500 lines of TypeScript. The key building blocks:\nPackage discovery - walks ~/.pi/agent/ finding all node_modules directories that belong to Pi:\nasync function findAuditTargets(ctx: ExtensionContext): Promise\u003c{ label: string; dir: string }[]\u003e { // ~/.pi/agent/npm/ - npm-installed Pi packages // ~/.pi/agent/git/**/ - git-installed Pi packages // ~/.pi/agent/extensions/*/ - packaged extensions with package.json // .pi/extensions/*/ - project-local packaged extensions } Advisory API query - single bulk POST, no lockfile needed:\nconst response = await fetch(\"https://registry.npmjs.org/-/npm/v1/security/advisories/bulk\", { method: \"POST\", headers: { \"Content-Type\": \"application/json\" }, body: JSON.stringify(packages), // { packageName: [version] } signal: AbortSignal.timeout(30000), }); Semver matching - advisory ranges use \u003e=1.x.x \u003c2.x.x style; no external deps needed:\nfunction isVersionVulnerable(installedVersion: string, vulnerableRange: string): boolean { return vulnerableRange.split(\"||\").some(group =\u003e group.trim().split(/\\s+/).every(comp =\u003e checkComparator(ver, comp)), ); } Widget and status line - updated after the async audit completes:\nctx.ui.setStatus(\"dep-audit\", summaryStatus(reports)); ctx.ui.setWidget(\"dep-audit\", buildWidget(reports), { placement: \"belowEditor\" }); If you want to adapt this for your own Pi setup, the full source is in my pi-config repo.\nWhat Else Should You Be Doing? Advisory scanning is one layer. A more complete posture for npm supply chain risk:\nPin exact versions in package.json and commit your lockfile. Floating ranges (^1.2.3) mean npm install can pull in a newer compromised version on the next run. Use --ignore-scripts for installs you don’t trust. npm install --ignore-scripts prevents preinstall/postinstall hooks from running. Worth defaulting to this in CI. Review the package tree before installing new dependencies. npm ls or npx depi can help visualise what you’re actually pulling in. Watch for unexpected CI/CD behaviour. Mini Shai Hulud targeted CI credential stores specifically. Unexpected process spawns or outbound connections in a build log are red flags. Rotate credentials after suspicious installs. If you npm install’d something that turned out to be compromised, assume all credentials accessible to that process need rotating. For agentic tools like Pi specifically: Pi itself runs with access to your shell, your files, and potentially your cloud credentials. That makes the integrity of Pi’s own dependencies genuinely important - it’s not just an app, it’s an agent with broad access to your environment.\nWhat’s Next The extension is working well as a startup health check. A few things I’d like to add:\nnpm outdated integration - surface available updates alongside advisories so you get a single “dependency health” view Changelog summarisation - when a patched version is available, pull the release notes and surface them in the audit report so you’re not upgrading blind Project dependency scanning - right now it only audits Pi’s own packages; it could optionally scan the current project’s node_modules too Mini Shai Hulud is a reminder that supply chain security isn’t a solved problem, and advisory databases are a lag indicator by design. The extension helps keep tabs on known-bad packages, but it’s one tool in a broader set of practices - not a substitute for them.\nIf you’re building Pi extensions yourself, have a look at the extension architecture post for a breakdown of when to reach for extensions versus skills or context files.\n",
+  "wordCount" : "1876",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/images/pi-agent-dep-audit-supply-chain.jpg","datePublished": "2026-05-21T00:00:00Z",
+  "dateModified": "2026-05-21T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Tom Cocking"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/pi-agent-dep-audit-supply-chain/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ExitCode0",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="ExitCode0 (Alt + H)">ExitCode0</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://datasolace.com/" title="DataSolace">
+                    <span>DataSolace</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/privacy/" title="Privacy">
+                    <span>Privacy</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Building a Dependency Audit Extension for Pi Agent - and What Mini Shai Hulud Taught Me About npm Supply Chains
+    </h1>
+    <div class="post-description">
+      I built a TypeScript extension for Pi Agent that audits installed npm packages against the advisory database on startup. Here&#39;s how it works, what it actually protects against, and where it falls short.
+    </div>
+    <div class="post-meta"><span title='2026-05-21 00:00:00 +0000 +0000'>May 21, 2026</span>&nbsp;·&nbsp;<span>9 min</span>&nbsp;·&nbsp;<span>Tom Cocking</span>
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="eager" src="http://localhost:1313/images/pi-agent-dep-audit-supply-chain.jpg" alt="Pi Agent terminal showing the dep-audit widget flagging a critical lodash vulnerability">
+        
+</figure><div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#whats-a-supply-chain-attack-and-why-does-npm-make-them-easy" aria-label="What&rsquo;s a Supply Chain Attack, and Why Does npm Make Them Easy?">What&rsquo;s a Supply Chain Attack, and Why Does npm Make Them Easy?</a></li>
+                <li>
+                    <a href="#what-i-built" aria-label="What I Built">What I Built</a><ul>
+                        
+                <li>
+                    <a href="#example-of-a-harmful-package" aria-label="Example Of A Harmful Package">Example Of A Harmful Package</a></li></ul>
+                </li>
+                <li>
+                    <a href="#how-the-extension-works" aria-label="How the Extension Works">How the Extension Works</a><ul>
+                        
+                <li>
+                    <a href="#the-advisory-api" aria-label="The Advisory API">The Advisory API</a></li>
+                <li>
+                    <a href="#what-it-audits" aria-label="What It Audits">What It Audits</a></li>
+                <li>
+                    <a href="#non-blocking-startup" aria-label="Non-Blocking Startup">Non-Blocking Startup</a></li>
+                <li>
+                    <a href="#patched-version-age" aria-label="Patched Version Age">Patched Version Age</a></li></ul>
+                </li>
+                <li>
+                    <a href="#what-this-actually-protects-against" aria-label="What This Actually Protects Against">What This Actually Protects Against</a></li>
+                <li>
+                    <a href="#what-this-does-not-protect-against" aria-label="What This Does Not Protect Against">What This Does Not Protect Against</a></li>
+                <li>
+                    <a href="#the-extension-code" aria-label="The Extension Code">The Extension Code</a></li>
+                <li>
+                    <a href="#what-else-should-you-be-doing" aria-label="What Else Should You Be Doing?">What Else Should You Be Doing?</a></li>
+                <li>
+                    <a href="#whats-next" aria-label="What&rsquo;s Next">What&rsquo;s Next</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>Last week, Microsoft&rsquo;s Defender research team published details of an attack campaign they&rsquo;re calling <a href="https://www.microsoft.com/en-us/security/blog/2026/05/20/mini-shai-hulud-compromised-antv-npm-packages-enable-ci-cd-credential-theft/">Mini Shai Hulud</a>. A threat actor compromised maintainer accounts for the <code>@antv</code> npm organisation - the team behind popular charting libraries like G2 and G6 - and published malicious versions containing a 499 KB obfuscated payload that ran automatically during <code>npm install</code>. The blast radius was significant: <code>echarts-for-react</code>, one of the downstream dependents, has over a million weekly downloads. GitHub pulled 640 package versions and invalidated 61,274 npm tokens before it was contained.</p>
+<p>I&rsquo;d been planning to build a dependency audit extension for <a href="https://pi.dev">Pi Agent</a> anyway. Reading through that report made it feel a bit more urgent.</p>
+<p>This post covers what I built, how it works, and - importantly - where advisory-based scanning actually helps and where it doesn&rsquo;t. Mini Shai Hulud is a good case study for the latter.</p>
+<hr>
+<h2 id="whats-a-supply-chain-attack-and-why-does-npm-make-them-easy">What&rsquo;s a Supply Chain Attack, and Why Does npm Make Them Easy?<a hidden class="anchor" aria-hidden="true" href="#whats-a-supply-chain-attack-and-why-does-npm-make-them-easy">#</a></h2>
+<p>If you already know this, skip ahead. If you&rsquo;ve heard the term and not quite understood it, here&rsquo;s the short version.</p>
+<p>When you install a package with <code>npm install</code>, you&rsquo;re not just installing the code you asked for. You&rsquo;re also installing everything that package depends on, and everything <em>those</em> packages depend on - a tree that can easily run to hundreds of packages for a single top-level dependency. Every node in that tree is a potential attack surface.</p>
+<p>The attack doesn&rsquo;t have to compromise the package&rsquo;s source code. It can compromise the <em>npm account</em> of any maintainer in the tree. Once you control a maintainer account, you can publish a new version with malicious code added. Anyone whose project has that package as a (direct or transitive) dependency will pull in the backdoor the next time they run <code>npm install</code>.</p>
+<p>Mini Shai Hulud used another trick on top of that: <strong>preinstall hooks</strong>. npm allows packages to declare shell commands that run automatically during installation - before you&rsquo;ve even looked at the code. The attack payload executed the moment someone ran <code>npm install</code> in a project with the compromised packages.</p>
+<p>That&rsquo;s the important bit for what follows. The malicious code ran <em>at install time</em>, not at runtime. Your application never even had to launch.</p>
+<hr>
+<h2 id="what-i-built">What I Built<a hidden class="anchor" aria-hidden="true" href="#what-i-built">#</a></h2>
+<p>Pi Agent is a minimal terminal coding harness - think Claude Code but locally hosted against Ollama. I&rsquo;ve written about <a href="../understanding-pi-agent-extension-model/">its extension architecture</a> previously; extensions are TypeScript modules that load at startup and can register tools, commands, and UI components.</p>
+<p>The <code>dep-audit</code> extension I built does one thing: at startup, it queries the npm advisory database against every package installed under Pi&rsquo;s own <code>node_modules</code>, and surfaces any known vulnerabilities directly in the Pi UI.</p>
+<p>Here&rsquo;s what it looks like in practice - a widget that appears below the editor pane on launch:</p>
+<pre tabindex="0"><code>🔍 Dependency Audit
+  pi-core: ✅ clean (312 packages checked)
+  pi-packages (npm): 🔵 1 low - 45 packages checked
+  /audit for full details and remediation
+</code></pre><p>Running <code>/audit</code> expands into a full report in the conversation:</p>
+<pre tabindex="0"><code> #### 🔵 LOW (1)
+
+ - @mozilla/readability
+     - Installed: 0.5.0
+     - Vulnerable versions: &lt;0.6.0
+     - Patched: &gt;=0.6.0 (v0.6.0 published — ✅ 443d old)
+     - Advisory reported: 420d ago
+     - @mozilla/readability Denial of Service through Regex
+     - CWE: CWE-1333
+     - https://github.com/advisories/GHSA-3p6v-hrg8-8qj7
+</code></pre><p>The patched version age is deliberate - I&rsquo;ll explain why shortly.</p>
+<h3 id="example-of-a-harmful-package">Example Of A Harmful Package<a hidden class="anchor" aria-hidden="true" href="#example-of-a-harmful-package">#</a></h3>
+<p>So that <code>readability</code> package seemingly isn&rsquo;t going to bring down our entire operation, but what would a package with bad dependency health look like? Well, I built a cursed helloworld extension that would allow us to see:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;dep-audit-vuln-fixture&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;DEP-AUDIT TEST FIXTURE — lodash@4.17.4 pinned intentionally vulnerable for audit demo/testing&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;dependencies&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;lodash&#34;</span>: <span style="color:#e6db74">&#34;4.17.4&#34;</span> <span style="color:#75715e">//BAD THINGS HERE
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And here is how our audit extension presents the review of our problematic dependencies:</p>
+<p><img alt="pi.dev Coding agent with our custom dependency auditing extension" loading="lazy" src="/images/auditing-bad-dependencies-in-pi-agent.jpg"></p>
+<hr>
+<h2 id="how-the-extension-works">How the Extension Works<a hidden class="anchor" aria-hidden="true" href="#how-the-extension-works">#</a></h2>
+<h3 id="the-advisory-api">The Advisory API<a hidden class="anchor" aria-hidden="true" href="#the-advisory-api">#</a></h3>
+<p><code>npm audit</code> requires a lockfile, which globally installed tools like Pi don&rsquo;t have. The workaround is querying npm&rsquo;s advisory API directly:</p>
+<pre tabindex="0"><code>POST https://registry.npmjs.org/-/npm/v1/security/advisories/bulk
+Content-Type: application/json
+
+{ &#34;@mozilla/readability&#34;: [&#34;0.5.0&#34;], &#34;some-other-package&#34;: [&#34;1.2.3&#34;] }
+</code></pre><p>The API returns all known advisories matching those package/version combinations. No lockfile required. I walk Pi&rsquo;s <code>node_modules</code> directories to collect the installed versions, batch them into a single request, and match the results against installed versions using a minimal semver range parser (npm&rsquo;s advisory ranges don&rsquo;t use caret or tilde, so about 30 lines covers it).</p>
+<h3 id="what-it-audits">What It Audits<a hidden class="anchor" aria-hidden="true" href="#what-it-audits">#</a></h3>
+<p>Pi installs packages in a few different places depending on how they were installed:</p>
+<ul>
+<li><code>~/.pi/agent/npm/node_modules/</code> - packages installed with <code>pi install npm:...</code></li>
+<li><code>~/.pi/agent/git/</code> - packages installed with <code>pi install git:...</code></li>
+<li><code>~/.pi/agent/extensions/*/</code> - directory-based extensions with their own <code>package.json</code></li>
+<li>The Pi core package itself, found via <code>npm root -g</code></li>
+</ul>
+<p>The extension finds all of these on startup and audits them in parallel.</p>
+<h3 id="non-blocking-startup">Non-Blocking Startup<a hidden class="anchor" aria-hidden="true" href="#non-blocking-startup">#</a></h3>
+<p>Pi starts up immediately - the audit runs in the background using a fire-and-forget pattern (<code>void runAudit(ctx)</code>), so there&rsquo;s no delay on launch. The status line updates when the results come in:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span><span style="color:#a6e22e">pi</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;session_start&#34;</span>, <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">_event</span>, <span style="color:#a6e22e">ctx</span>) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">runAudit</span>(<span style="color:#a6e22e">ctx</span>); <span style="color:#75715e">// fire and forget
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>});
+</span></span></code></pre></div><h3 id="patched-version-age">Patched Version Age<a hidden class="anchor" aria-hidden="true" href="#patched-version-age">#</a></h3>
+<p>This is the part most directly relevant to supply chain attacks. When an advisory has a patched version, the extension queries the npm registry to find out <em>when</em> that version was published:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">minPatched</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">extractMinPatchedVersion</span>(<span style="color:#a6e22e">advisory</span>.<span style="color:#a6e22e">patched_versions</span> <span style="color:#f92672">??</span> <span style="color:#e6db74">&#34;&#34;</span>) <span style="color:#f92672">??</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">inferPatchedFromVulnerable</span>(<span style="color:#a6e22e">advisory</span>.<span style="color:#a6e22e">vulnerable_versions</span> <span style="color:#f92672">??</span> <span style="color:#e6db74">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">minPatched</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">publishedAt</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">getVersionPublishDate</span>(<span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">minPatched</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ageNote</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">publishedAt</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">` — </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">ageLabel</span>(<span style="color:#a6e22e">daysAgo</span>(<span style="color:#a6e22e">publishedAt</span>))<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">patchedLabel</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">advisory</span>.<span style="color:#a6e22e">patched_versions</span> <span style="color:#f92672">??</span> <span style="color:#e6db74">`&gt;=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">minPatched</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">`  - Patched: \`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">patchedLabel</span><span style="color:#e6db74">}</span><span style="color:#e6db74">\` (v</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">minPatched</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> published</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">ageNote</span><span style="color:#e6db74">}</span><span style="color:#e6db74">)`</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div><p>The <code>ageLabel</code> function returns one of three things:</p>
+<pre tabindex="0"><code>⚠ only 2d old - too new to trust
+⚠ 18d old - consider waiting
+✅ 47d old
+</code></pre><p>The idea: if a &ldquo;fix&rdquo; was published yesterday, that&rsquo;s not necessarily a safe thing to install. A common supply chain tactic is to compromise the <em>patched</em> version - publishing a legitimate-looking fix that carries a backdoor. Packages that have been public for several weeks with no reported issues are considerably safer. It&rsquo;s not a guarantee, but it&rsquo;s useful signal.</p>
+<hr>
+<h2 id="what-this-actually-protects-against">What This Actually Protects Against<a hidden class="anchor" aria-hidden="true" href="#what-this-actually-protects-against">#</a></h2>
+<p><strong>Known vulnerabilities in installed packages.</strong> If Pi has a package installed that has an advisory filed against it, this surfaces it with severity, CVE IDs, CVSS score, and remediation steps. That&rsquo;s the core value - it&rsquo;s easy to install something and never check whether a vulnerability was later discovered.</p>
+<p><strong>Suspiciously fresh &ldquo;fixes&rdquo;.</strong> The publish age display is a lightweight heuristic for the poisoned-patch pattern. If a patched version is very new, the audit flags it for your attention before you blindly upgrade.</p>
+<p><strong>Awareness of what&rsquo;s installed.</strong> The widget shows a package count per target even when everything is clean. Knowing that Pi-core has 312 packages in its dependency tree - and that they&rsquo;re all clean - is itself useful.</p>
+<hr>
+<h2 id="what-this-does-not-protect-against">What This Does Not Protect Against<a hidden class="anchor" aria-hidden="true" href="#what-this-does-not-protect-against">#</a></h2>
+<p>Here&rsquo;s where I want to be honest, because Mini Shai Hulud is a direct example of the limits.</p>
+<p><strong>The attack payload ran before any advisory existed.</strong> The malicious versions were published, they ran their preinstall hooks, and credentials were exfiltrated - all before GitHub pulled the packages and before any advisory was filed. Advisory-based scanning is <em>reactive</em>. There is no advisory for an attack that was discovered yesterday. The window between a compromised package being published and being flagged is exactly the window you&rsquo;re most exposed.</p>
+<p><strong>Preinstall hooks run at install time, not at runtime.</strong> Our extension audits what&rsquo;s already installed. It doesn&rsquo;t intercept what happens <em>during</em> <code>npm install</code>. Running <code>npm install --ignore-scripts</code> is the mitigation for preinstall hook attacks - but that requires you to know to do it before you install, and it can break packages that legitimately use install scripts.</p>
+<p><strong>Transitive dependencies.</strong> If a package you depend on depends on a compromised package, our semver matching will catch it if there&rsquo;s an advisory - but only if the advisory exists and if we correctly enumerate the full transitive tree. The tree walking is thorough but not guaranteed to catch every edge case in nested or hoisted installs.</p>
+<p><strong>Account compromise without a vulnerability.</strong> Mini Shai Hulud wasn&rsquo;t a vulnerability in the code - it was a compromised maintainer account. There&rsquo;s no CVE for &ldquo;the maintainer got phished.&rdquo; The advisory database only covers known security flaws, not supply chain integrity.</p>
+<hr>
+<h2 id="the-extension-code">The Extension Code<a hidden class="anchor" aria-hidden="true" href="#the-extension-code">#</a></h2>
+<p>The full extension is about 500 lines of TypeScript. The key building blocks:</p>
+<p><strong>Package discovery</strong> - walks <code>~/.pi/agent/</code> finding all <code>node_modules</code> directories that belong to Pi:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">findAuditTargets</span>(<span style="color:#a6e22e">ctx</span>: <span style="color:#66d9ef">ExtensionContext</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">Promise</span><span style="color:#f92672">&lt;</span>{ <span style="color:#a6e22e">label</span>: <span style="color:#66d9ef">string</span>; <span style="color:#a6e22e">dir</span>: <span style="color:#66d9ef">string</span> }[]<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// ~/.pi/agent/npm/ - npm-installed Pi packages
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// ~/.pi/agent/git/**/ - git-installed Pi packages
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// ~/.pi/agent/extensions/*/ - packaged extensions with package.json
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// .pi/extensions/*/ - project-local packaged extensions
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p><strong>Advisory API query</strong> - single bulk POST, no lockfile needed:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">response</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#34;https://registry.npmjs.org/-/npm/v1/security/advisories/bulk&#34;</span>, {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">method</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;POST&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">headers</span><span style="color:#f92672">:</span> { <span style="color:#e6db74">&#34;Content-Type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;application/json&#34;</span> },
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">body</span>: <span style="color:#66d9ef">JSON.stringify</span>(<span style="color:#a6e22e">packages</span>), <span style="color:#75715e">// { packageName: [version] }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">signal</span>: <span style="color:#66d9ef">AbortSignal.timeout</span>(<span style="color:#ae81ff">30000</span>),
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p><strong>Semver matching</strong> - advisory ranges use <code>&gt;=1.x.x &lt;2.x.x</code> style; no external deps needed:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isVersionVulnerable</span>(<span style="color:#a6e22e">installedVersion</span>: <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">vulnerableRange</span>: <span style="color:#66d9ef">string</span>)<span style="color:#f92672">:</span> <span style="color:#66d9ef">boolean</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">vulnerableRange</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#34;||&#34;</span>).<span style="color:#a6e22e">some</span>(<span style="color:#a6e22e">group</span> <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">group</span>.<span style="color:#a6e22e">trim</span>().<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">/\s+/</span>).<span style="color:#a6e22e">every</span>(<span style="color:#a6e22e">comp</span> <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">checkComparator</span>(<span style="color:#a6e22e">ver</span>, <span style="color:#a6e22e">comp</span>)),
+</span></span><span style="display:flex;"><span>  );
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Widget and status line</strong> - updated after the async audit completes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">ui</span>.<span style="color:#a6e22e">setStatus</span>(<span style="color:#e6db74">&#34;dep-audit&#34;</span>, <span style="color:#a6e22e">summaryStatus</span>(<span style="color:#a6e22e">reports</span>));
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">ui</span>.<span style="color:#a6e22e">setWidget</span>(<span style="color:#e6db74">&#34;dep-audit&#34;</span>, <span style="color:#a6e22e">buildWidget</span>(<span style="color:#a6e22e">reports</span>), { <span style="color:#a6e22e">placement</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;belowEditor&#34;</span> });
+</span></span></code></pre></div><p>If you want to adapt this for your own Pi setup, the full source is in my <a href="https://git.datasolace.io/DataSolace/pi-config">pi-config repo</a>.</p>
+<hr>
+<h2 id="what-else-should-you-be-doing">What Else Should You Be Doing?<a hidden class="anchor" aria-hidden="true" href="#what-else-should-you-be-doing">#</a></h2>
+<p>Advisory scanning is one layer. A more complete posture for npm supply chain risk:</p>
+<ul>
+<li><strong>Pin exact versions</strong> in <code>package.json</code> and commit your lockfile. Floating ranges (<code>^1.2.3</code>) mean <code>npm install</code> can pull in a newer compromised version on the next run.</li>
+<li><strong>Use <code>--ignore-scripts</code> for installs you don&rsquo;t trust.</strong> <code>npm install --ignore-scripts</code> prevents preinstall/postinstall hooks from running. Worth defaulting to this in CI.</li>
+<li><strong>Review the package tree before installing new dependencies.</strong> <code>npm ls</code> or <code>npx depi</code> can help visualise what you&rsquo;re actually pulling in.</li>
+<li><strong>Watch for unexpected CI/CD behaviour.</strong> Mini Shai Hulud targeted CI credential stores specifically. Unexpected process spawns or outbound connections in a build log are red flags.</li>
+<li><strong>Rotate credentials after suspicious installs.</strong> If you <code>npm install</code>&rsquo;d something that turned out to be compromised, assume all credentials accessible to that process need rotating.</li>
+</ul>
+<p>For agentic tools like Pi specifically: Pi itself runs with access to your shell, your files, and potentially your cloud credentials. That makes the integrity of Pi&rsquo;s own dependencies genuinely important - it&rsquo;s not just an app, it&rsquo;s an agent with broad access to your environment.</p>
+<hr>
+<h2 id="whats-next">What&rsquo;s Next<a hidden class="anchor" aria-hidden="true" href="#whats-next">#</a></h2>
+<p>The extension is working well as a startup health check. A few things I&rsquo;d like to add:</p>
+<ul>
+<li><strong><code>npm outdated</code> integration</strong> - surface available updates alongside advisories so you get a single &ldquo;dependency health&rdquo; view</li>
+<li><strong>Changelog summarisation</strong> - when a patched version is available, pull the release notes and surface them in the audit report so you&rsquo;re not upgrading blind</li>
+<li><strong>Project dependency scanning</strong> - right now it only audits Pi&rsquo;s own packages; it could optionally scan the current project&rsquo;s <code>node_modules</code> too</li>
+</ul>
+<p>Mini Shai Hulud is a reminder that supply chain security isn&rsquo;t a solved problem, and advisory databases are a lag indicator by design. The extension helps keep tabs on known-bad packages, but it&rsquo;s one tool in a broader set of practices - not a substitute for them.</p>
+<p>If you&rsquo;re building Pi extensions yourself, have a look at the <a href="../understanding-pi-agent-extension-model/">extension architecture post</a> for a breakdown of when to reach for extensions versus skills or context files.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/pi-agent/">Pi-Agent</a></li>
+      <li><a href="http://localhost:1313/tags/npm/">Npm</a></li>
+      <li><a href="http://localhost:1313/tags/security/">Security</a></li>
+      <li><a href="http://localhost:1313/tags/supply-chain/">Supply-Chain</a></li>
+      <li><a href="http://localhost:1313/tags/typescript/">Typescript</a></li>
+      <li><a href="http://localhost:1313/tags/local-ai/">Local-Ai</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/posts/understanding-pi-agent-extension-model/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Understanding Pi Agent&#39;s Extension Model: Context Files, Skills, and TypeScript Extensions</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">ExitCode0</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
