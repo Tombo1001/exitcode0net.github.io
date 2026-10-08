@@ -11,14 +11,16 @@ Tags: alfa, awus036ac, drivers, kali
 
 > **Note:** This guide was written for Kali Linux 2019.4. The core dkms build method still works on current Kali, but package names and kernel headers may differ slightly on newer releases.
 
-I am planning a number of articles which focus on using aircrack-ng and hashcast to recover WPA wireless security passwords. However to get into that you need to have a specific wireless device which supports monitor mode and packet injection. I decided on the Alfa AWUS036AC, but some work was required to get the drivers installed.
+> **Authorised use only:** monitor mode and packet injection are standard tools for testing wireless networks you own or have written permission to assess. Using them against anyone else's network is illegal in the UK under the Computer Misuse Act 1990. This post covers getting the adapter's driver working and nothing else.
+
+Wireless security testing with aircrack-ng needs a wireless adapter that supports monitor mode and packet injection. I decided on the Alfa AWUS036AC, but some work was required to get the drivers installed.
 
 This guide is based on Kali Linux 2019.4 – but the drivers are certified for earlier versions of Kali and the kernel that 2019.4 uses. See updates below for getting this working on Kali 2020.4.
 
 Hardware – AWUS036AC
 --------------------
 
-My choice of hardware for WPA password recovery was the Alfa Networks AWUS036AC – [https://amzn.to/34LlqXY](https://amzn.to/34LlqXY "https://amzn.to/34LlqXY")
+My choice of adapter for wireless testing was the Alfa Networks AWUS036AC – [https://amzn.to/34LlqXY](https://amzn.to/34LlqXY "https://amzn.to/34LlqXY")
 
 Full manufacturer specifications – [https://www.alfa.com.tw/products\_detail/3.htm](https://www.alfa.com.tw/products_detail/3.htm "https://www.alfa.com.tw/products_detail/3.htm")
 
@@ -146,9 +148,8 @@ Codename:       kali-rolling
 
 ```
 
-…and here is proof of function with airodump-ng:
+…and airodump-ng was my check that the adapter worked in monitor mode.
 
-*Some yummy WEP networks in there for my troubles!*
 It is worth noting that `iwconfig` shows the interface `wlan0` in monitor mode; a `mon0` interface is not created like most online tutorials demonstrate: [https://www.computerweekly.com/tip/Step-by-step-aircrack-tutorial-for-Wi-Fi-penetration-testing](https://www.computerweekly.com/tip/Step-by-step-aircrack-tutorial-for-Wi-Fi-penetration-testing "https://www.computerweekly.com/tip/Step-by-step-aircrack-tutorial-for-Wi-Fi-penetration-testing").
 
 ---
