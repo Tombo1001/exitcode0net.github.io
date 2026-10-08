@@ -64,7 +64,7 @@ Other useful posts:
 -------------------
 
 * Backup Google Photos with Rclone – [https://exitcode0.net/posts/backup-google-photos-with-rclone/](https://exitcode0.net/posts/backup-google-photos-with-rclone/ "https://exitcode0.net/posts/backup-google-photos-with-rclone/")
-* Kali Linux – How to upgrade python 2.7 to python 3.7 – [https://exitcode0.net/posts/kali-linux-how-to-upgrade-python-2-7-to-python-3-7/](https://exitcode0.net/posts/kali-linux-how-to-upgrade-python-2-7-to-python-3-7/ "https://exitcode0.net/posts/kali-linux-how-to-upgrade-python-2-7-to-python-3-7/")
+* Kali Linux – How to upgrade python 2.7 to python 3.7 – [https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/](https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/ "https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/")
 * Switching to a Linux laptop – https://exitcode0.net/switching-to-a-linux-laptop/
 
 I’m working hard to bring as much useful content to this blog as I can. You can support this site by sharing pages or posts and I will be forever indebted to those who do!

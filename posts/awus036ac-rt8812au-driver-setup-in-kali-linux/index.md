@@ -155,7 +155,7 @@ It is worth noting that `iwconfig` shows the interface `wlan0` in monitor mode; 
 
 ### Other useful articles:
 
-* [https://exitcode0.net/posts/kali-linux-how-to-upgrade-python-2-7-to-python-3-7/](https://exitcode0.net/posts/kali-linux-how-to-upgrade-python-2-7-to-python-3-7/ "https://exitcode0.net/posts/kali-linux-how-to-upgrade-python-2-7-to-python-3-7/")
+* [https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/](https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/ "https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/")
 * [https://exitcode0.net/clipboard-and-shared-folders-on-kali-linux-with-virtualbox/](https://exitcode0.net/posts/clipboard-and-shared-folders-on-kali-linux-with-virtualbox/)
 
 

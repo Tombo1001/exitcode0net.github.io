@@ -67,7 +67,7 @@ I have split both webhook triggers into two functions – funcHSTon & funcHSToff
 Other useful posts:
 -------------------
 
-* **Ubuntu 19.10 – How to upgrade python 2.7 to python 3.7** – [https://exitcode0.net/ubuntu-19-10-how-to-upgrade-python-2-7-to-python-3-7/](https://exitcode0.net/posts/ubuntu-19-10-how-to-upgrade-python-2-7-to-python-3-7/)
+* **Ubuntu 19.10 – How to upgrade python 2.7 to python 3.7** – [https://exitcode0.net/ubuntu-19-10-how-to-upgrade-python-2-7-to-python-3-7/](https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/)
 * **Debian 9 – How to upgrade python 3.5 to python 3.7** – [https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/](https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/ "https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/")
 
 

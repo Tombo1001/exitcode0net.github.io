@@ -1,4 +1,4 @@
-# Generating Artwork With Stable Diffusion - April 2024 Edition
+# Generating Artwork With Local Stable Diffusion on an RTX GPU: What Works and What Doesn't
 
 > A look at the state of artwork generation with stable-diffusion in April 2024. Investigating if (local) stable-diffusion can reliably produce enjoyable artwork.
 

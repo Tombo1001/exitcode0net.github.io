@@ -47,7 +47,7 @@ Pro-tip for first time Kali users… don’t give a name by which you could be i
 
 I like that you can now select the [metapackages](https://www.kali.org/docs/general-use/metapackages/ "https://www.kali.org/docs/general-use/metapackages/") which you install and the Desktop environment (unless you use the automated installer method). So you can make your installation as fat or lightweight as you need it.
 
-Once you’ve completed your install, everything else feels more or less the same. The maintainers are committed to binning as many python2 dependant tools as they can as technically they are [no longer supported](https://exitcode0.net/posts/python-2-7-end-of-life-the-time-to-upgrade-is-upon-us/). We have some new tools, which I excited to test at a given opportunity:
+Once you’ve completed your install, everything else feels more or less the same. The maintainers are committed to binning as many python2 dependant tools as they can as technically they are [no longer supported](https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/). We have some new tools, which I excited to test at a given opportunity:
 
 * cloud-enum
 * emailharvester
@@ -81,7 +81,7 @@ lsb_release -a
 Other useful Kali posts:
 ------------------------
 
-* Kali Linux – How to upgrade python 2.7 to python 3.7 [https://exitcode0.net/posts/kali-linux-how-to-upgrade-python-2-7-to-python-3-7/](https://exitcode0.net/posts/kali-linux-how-to-upgrade-python-2-7-to-python-3-7/ "https://exitcode0.net/posts/kali-linux-how-to-upgrade-python-2-7-to-python-3-7/")
+* Kali Linux – How to upgrade python 2.7 to python 3.7 [https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/](https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/ "https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/")
 * How to make a VirtualBox VM the same resolution as host – [https://exitcode0.net/how-to-make-a-virtualbox-vm-the-same-resolution-as-host/](https://exitcode0.net/posts/how-to-make-a-virtualbox-vm-the-same-resolution-as-host/)
 * Clipboard and Shared Folders on Kali Linux with VirtualBox – [https://exitcode0.net/clipboard-and-shared-folders-on-kali-linux-with-virtualbox/](https://exitcode0.net/posts/clipboard-and-shared-folders-on-kali-linux-with-virtualbox/)
 * AWUS036AC (rt8812au) driver setup in Kali Linux – [https://exitcode0.net/posts/awus036ac-rt8812au-driver-setup-in-kali-linux/](https://exitcode0.net/posts/awus036ac-rt8812au-driver-setup-in-kali-linux/ "https://exitcode0.net/posts/awus036ac-rt8812au-driver-setup-in-kali-linux/") (pending validation with 2020.1)

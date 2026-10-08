@@ -1,4 +1,4 @@
-# Homeassistant Enable MagicDNS and HTTPS Certificates in Tailscale
+# Home Assistant HTTPS with Tailscale: MagicDNS and Valid TLS Certificates Without Port Forwarding
 
 > Get valid HTTPS certificates for Home Assistant with Tailscale MagicDNS, so local voice control works without port forwarding or a public domain.
 

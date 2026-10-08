@@ -23,9 +23,9 @@ Go for a quick reboot once the above commands are complete and you should have c
 More Linux Tidbits:
 -------------------
 
-* Changing the default python version in Debian [https://exitcode0.net/posts/changing-the-default-python-version-in-debian/](https://exitcode0.net/posts/changing-the-default-python-version-in-debian/ "https://exitcode0.net/posts/changing-the-default-python-version-in-debian/")
+* Changing the default python version in Debian [https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/](https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/ "https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/")
 * Debian 9 – Running a python script at boot [https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/](https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/ "https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/")
-* Changing the default python version in Debian [https://exitcode0.net/posts/changing-the-default-python-version-in-debian/](https://exitcode0.net/posts/changing-the-default-python-version-in-debian/ "https://exitcode0.net/posts/changing-the-default-python-version-in-debian/")
+* Changing the default python version in Debian [https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/](https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/ "https://exitcode0.net/posts/debian-9-how-to-upgrade-python-3-5-to-python-3-7/")
 
 
 

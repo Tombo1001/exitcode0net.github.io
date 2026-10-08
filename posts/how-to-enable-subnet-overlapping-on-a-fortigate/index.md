@@ -1,4 +1,4 @@
-# How to enable subnet overlapping on a Fortigate
+# How to Enable Subnet Overlapping on a Fortigate (allow-subnet-overlap)
 
 > Enable subnet overlapping on a Fortigate so the same IP range can sit on multiple interfaces. Set allow-subnet-overlap in the FortiOS CLI for HA management IPs.
 

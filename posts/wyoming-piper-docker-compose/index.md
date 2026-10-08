@@ -1,4 +1,4 @@
-# Setting up Wyoming Piper with Docker Compose
+# Wyoming Piper Docker Compose: Local Text-to-Speech for Home Assistant
 
 > Deploy Wyoming Piper text-to-speech in Docker for Home Assistant, giving local voice output with a choice of languages and voice models.
 
@@ -9,7 +9,7 @@ Updated: 2026-10-08
 Tags: docker, wyoming, piper, tts, home-assistant, voice-assistant
 
 
-In previous posts I have been using Docker Compose to deploy the constituent components of a fully local Home Assistant voice assistant. In this blog post, we will guide you through setting up Wyoming Piper using Docker Compose. Piper is a fast, local neural text to speech system originally optimised for the Raspberry Pi 4. It supports many languages, and voice samples: https://rhasspy.github.io/piper-samples.
+Wyoming Piper is the text-to-speech half of a fully local Home Assistant voice assistant, and the whole thing is one Docker Compose service. Below is the compose file I run, the voice model choice, and how to point Home Assistant at it. The speech-to-text half is [Wyoming Whisper](https://exitcode0.net/posts/wyoming-whisper-docker-compose/). This post walks through setting up Wyoming Piper using Docker Compose. Piper is a fast, local neural text to speech system originally optimised for the Raspberry Pi 4. It supports many languages, and voice samples: https://rhasspy.github.io/piper-samples.
 
 Wyoming Piper is a speech recognition and natural language understanding system that can be used for voice control in various applications. It uses the Rhasspy framework and provides support for different languages and voices.
 

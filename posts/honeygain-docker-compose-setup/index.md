@@ -1,4 +1,4 @@
-# Honeygain docker-compose setup
+# Honeygain Docker Compose Setup: Run It on a Home Server
 
 > Deploy Honeygain in a Docker container with Docker Compose. Earn passive income by sharing unused bandwidth from a home server or always-on machine.
 

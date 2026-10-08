@@ -1,4 +1,4 @@
-# How to Use a Docker Compose File for Wyoming Whisper
+# Wyoming Whisper Docker Compose: Local Speech-to-Text for Home Assistant
 
 > Run Whisper speech-to-text in Docker for a local Home Assistant voice assistant, with a lightweight Wyoming Whisper model for fast recognition.
 
@@ -9,7 +9,7 @@ Updated: 2026-10-08
 Tags: docker, wyoming, whisper, stt, home-assistant, voice-assistant
 
 
-In this blog post, we will go over how to use a Docker Compose file to deploy and configure Wyoming Whisper. Wyoming Whisper is an open-source, lightweight voice assistant designed to run on a Raspberry Pi or other low-powered device. The impetus for this compose defined container is to intergate with a Home Assistant 2023.5 container and ultimate have a fully local voice assistant. Whisper will provide our speech-to-text service and the Wyoming protocol is how it will be integrated with Home Assistant.
+Wyoming Whisper is the speech-to-text half of a fully local Home Assistant voice assistant, and it runs as a single Docker Compose service on a Pi or any small box. Below is the compose file, the model choice, and how to point Home Assistant at it. The text-to-speech half is [Wyoming Piper](https://exitcode0.net/posts/wyoming-piper-docker-compose/). Wyoming Whisper is an open-source, lightweight voice assistant designed to run on a Raspberry Pi or other low-powered device. The impetus for this compose defined container is to intergate with a Home Assistant 2023.5 container and ultimate have a fully local voice assistant. Whisper will provide our speech-to-text service and the Wyoming protocol is how it will be integrated with Home Assistant.
 
 **NOTE:** For your reference, I am using Home Assistant in a container which is why I have not simply setup the wyoming wishper addons.
 
