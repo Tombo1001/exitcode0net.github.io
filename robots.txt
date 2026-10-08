@@ -1,3 +1,4 @@
 User-agent: *
 Disallow:
+Content-Signal: search=yes, ai-input=yes
 Sitemap: https://exitcode0.net/sitemap.xml
