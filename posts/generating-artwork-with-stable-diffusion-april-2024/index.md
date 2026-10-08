@@ -119,7 +119,7 @@ You can skip ahead to see more results here in the [results comparison](#results
 
 Provided that no generation configuration values are changed and a fixed seed is defined (including [Hires Fix](#hires-fix) settings), you will always get the same output from the vision model. Each time to you generate an image, the webui shows your the parameters used; there for you could replicate any image using these parameters. Try this:
 
-![Using the SD output parameters to recreate identical images.](https://exitcode0.net/images/stable-diffusion-controlnet-prompting.png)
+![Using the SD output parameters to recreate identical images.](https://exitcode0.net/images/stable-diffusion-controlnet-prompting.jpg)
 
 One thing you must understand, if you increase the Batch Count, the seed value still increments (by 1, at default).
 
@@ -131,7 +131,7 @@ Style are an amendment to a prompt and can have a offer a very strong level of c
 
 One of the best resources I have encountered is this style cheat sheet: [supagruen.github.io/StableDiffusion-CheatSheet](https://supagruen.github.io/StableDiffusion-CheatSheet). Simply pick a style you are interested in, copy the style prompt and append it to your existing prompt in stable-diffusion-webui. The sit splits out the styles with tags and categories to help you pick your perfect style. This has to be one of the most valuable AI image generation resources to date.
 
-![Stable Diffusion 1.5 - Cheat Sheet.](https://exitcode0.net/images/stable-diffusion-1_5-cheat-sheet.png)
+![Stable Diffusion 1.5 - Cheat Sheet.](https://exitcode0.net/images/stable-diffusion-1-5-cheat-sheet.png)
 
 ---
 
@@ -173,7 +173,7 @@ This ContorlNet module aims to by add extra conditions to the neural network str
 
 Here is how we can configure openpose in the controlnet plug section of the SD-webui interface:
 
-![ControlNet OpenPose using default values.](https://exitcode0.net/images/stable-diffusion-controlnet-openpose-settings.png)
+![ControlNet OpenPose using default values.](https://exitcode0.net/images/stable-diffusion-controlnet-openpose-settings.jpg)
 
 This results in the following wireframe pose detection - not a perfect capture due to a slightly ambiguous input image of a non-human entity:
 
@@ -181,7 +181,7 @@ This results in the following wireframe pose detection - not a perfect capture d
 
 Ultimately resulting in some very nice output images, which adhere to our prompt, provide creativity and strike the same pose. I believe that the slight issue in the pose is what caused SD to confuse the direction that the subject was facing in some images.
 
-![ControlNet OpenPose generating a batch of 4 images based on our wireframe and prompt.](https://exitcode0.net/images/stable-diffusion-controlnet-openpose-output.png)
+![ControlNet OpenPose generating a batch of 4 images based on our wireframe and prompt.](https://exitcode0.net/images/stable-diffusion-controlnet-openpose-output.jpg)
 
 ---
 
@@ -232,7 +232,7 @@ One setting that we must consider is **Denoising strength** - this determines ho
 
 It is the year 2024 and if we are being truthful, 512px by 512px images look like an early Fallout game and 1024px by 1024px is also unacceptable in this age of retina displays. Fortunately, we can use the upscaling feature in SD-webui to grace our eyeballs with higher resolution images, after generation. Let's take a look at how to upscale in SD-webui:
 
-![Upscaling with the Extras tab.](https://exitcode0.net/images/stable-diffusion-extras-upscaling.png)
+![Upscaling with the Extras tab.](https://exitcode0.net/images/stable-diffusion-extras-upscaling.jpg)
 
 The above figure takes out 1920px by 1080px image and upscales it to 3840px by 2160px. The main caveat to upscaling is that unlike Hires Fix, we are not adding detail when we expand the image because no sampling is taking place.
 
@@ -258,25 +258,25 @@ This might not seem like much but I have spent somewhere in the region of 48 hou
 
 So if you haven't already gathered, there are a lot of variables that we can modify to guide the image generation process and produce a result that we are aiming for. Let's take a look at what sand can do when we teach it to think... here are some of my favourite images so far:
 
-![Lonely robots walking away into a cataclysmic valley part 1.](https://exitcode0.net/images/stable-diffusion-april-robot-01.png)
+![Lonely robots walking away into a cataclysmic valley part 1.](https://exitcode0.net/images/stable-diffusion-april-robot-01.jpg)
 
-![Lonely robots walking away into a cataclysmic valley part 2.](https://exitcode0.net/images/stable-diffusion-april-robot-02.png)
+![Lonely robots walking away into a cataclysmic valley part 2.](https://exitcode0.net/images/stable-diffusion-april-robot-02.jpg)
 
-![Lonely robots walking away into a cataclysmic valley part 3.](https://exitcode0.net/images/stable-diffusion-april-robot-03.png)
+![Lonely robots walking away into a cataclysmic valley part 3.](https://exitcode0.net/images/stable-diffusion-april-robot-03.jpg)
 
-![Lonely robots walking away into a cataclysmic valley part 4.](https://exitcode0.net/images/stable-diffusion-april-robot-04.png)
+![Lonely robots walking away into a cataclysmic valley part 4.](https://exitcode0.net/images/stable-diffusion-april-robot-04.jpg)
 
-![Lonely robots walking away into a cataclysmic valley part 5.](https://exitcode0.net/images/stable-diffusion-april-robot-05.png)
+![Lonely robots walking away into a cataclysmic valley part 5.](https://exitcode0.net/images/stable-diffusion-april-robot-05.jpg)
 
-![Lonely robots walking away into a cataclysmic valley part 6.](https://exitcode0.net/images/stable-diffusion-april-robot-06.png)
+![Lonely robots walking away into a cataclysmic valley part 6.](https://exitcode0.net/images/stable-diffusion-april-robot-06.jpg)
 
-![Lonely robots walking away into a cataclysmic valley part 7.](https://exitcode0.net/images/stable-diffusion-april-robot-07.png)
+![Lonely robots walking away into a cataclysmic valley part 7.](https://exitcode0.net/images/stable-diffusion-april-robot-07.jpg)
 
-![Lonely robots walking away into a cataclysmic valley part 8.](https://exitcode0.net/images/stable-diffusion-april-robot-08.png)
+![Lonely robots walking away into a cataclysmic valley part 8.](https://exitcode0.net/images/stable-diffusion-april-robot-08.jpg)
 
 If you found this article useful, consider sharing it in your social circles or bookmarking this page as I have lots more stable-diffusion content in the works...
 
-![](https://exitcode0.net/images/stable-diffusion-april-robot-gif.gif)
+![](https://exitcode0.net/images/stable-diffusion-april-robot-gif.webp)
 
 
 ---

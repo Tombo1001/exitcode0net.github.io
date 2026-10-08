@@ -111,7 +111,7 @@ It would be fantastic to emulate control devices such as those offered in Contro
 
 There are some novel 3D printed solutions for wall mounting:
 
-![Printable FireHD10 wall mount](https://exitcode0.net/images/fire-tablet-wall-mount.png)
+![Printable FireHD10 wall mount](https://exitcode0.net/images/fire-tablet-wall-mount.jpg)
 
 - https://www.printables.com/model/383856-wall-mount-for-fire-tablet-hd-10-11th-gen-2021
 
