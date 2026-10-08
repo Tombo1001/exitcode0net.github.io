@@ -17,7 +17,7 @@ If you choose to deny, no info will be collected whatsoever.
 
 ## Affiliate links
 
-Some posts contain Amazon UK affiliate links, marked with a disclosure at the top of the post. If you buy something through one of those links, this site earns a small commission. It costs you nothing extra and it does not change what gets recommended.
+Some posts contain affiliate or referral links, mostly Amazon UK and in one case Honeygain. Each of those posts carries a disclosure at the top. If you buy or sign up through one of those links, this site may earn a small commission or credit. It costs you nothing extra and it does not change what gets recommended.
 
 
 ---
