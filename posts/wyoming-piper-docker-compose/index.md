@@ -1,83 +1,138 @@
 # Wyoming Piper Docker Compose: Local Text-to-Speech for Home Assistant
 
-> Deploy Wyoming Piper text-to-speech in Docker for Home Assistant, giving local voice output with a choice of languages and voice models.
+> Run Wyoming Piper text-to-speech in Docker Compose for Home Assistant. Tested compose file, voice naming, 174 voices and corrections to my 2023 post.
 
 Source: https://exitcode0.net/posts/wyoming-piper-docker-compose/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2023-05-16
 Updated: 2026-10-08
-Tags: docker, wyoming, piper, tts, home-assistant, voice-assistant
+Tags: docker, wyoming, piper, tts, home-assistant, voice-assistant, docker-compose
 
+> **Updated October 2026:** I re-tested this on 8 October 2026 against the current `rhasspy/wyoming-piper` image and corrected three things I got wrong in 2023. Piper is text-to-speech, not speech recognition. Port 10200 isn't a web interface. And voices are now named like `en_GB-alba-medium`. The compose file also no longer needs a `version` line. The Home Assistant steps are unchanged from the original and I haven't re-run them on a current release.
 
-Wyoming Piper is the text-to-speech half of a fully local Home Assistant voice assistant, and the whole thing is one Docker Compose service. Below is the compose file I run, the voice model choice, and how to point Home Assistant at it. The speech-to-text half is [Wyoming Whisper](https://exitcode0.net/posts/wyoming-whisper-docker-compose/). This post walks through setting up Wyoming Piper using Docker Compose. Piper is a fast, local neural text to speech system originally optimised for the Raspberry Pi 4. It supports many languages, and voice samples: https://rhasspy.github.io/piper-samples.
-
-Wyoming Piper is a speech recognition and natural language understanding system that can be used for voice control in various applications. It uses the Rhasspy framework and provides support for different languages and voices.
+Wyoming Piper is the text-to-speech half of a fully local Home Assistant voice assistant, and it runs as one Docker Compose service. Piper is a fast neural text-to-speech system that was first tuned for the Raspberry Pi 4. The Wyoming wrapper lets Home Assistant use it over the network. It supports many languages and voices, and you can hear them on the [Piper samples page](https://rhasspy.github.io/piper-samples). The speech-to-text half is [Wyoming Whisper](https://exitcode0.net/posts/wyoming-whisper-docker-compose/).
 
 ## Prerequisites
 
-Before you begin, make sure you have Docker and Docker Compose installed on your system. You can find installation instructions for your operating system on the [Docker website](https://docs.docker.com/get-docker/) and [Docker Compose website](https://docs.docker.com/compose/install/).
+You need Docker with the Compose plugin. `docker compose version` should print a version. I tested on Compose 2.40.3. Installation instructions for your OS are on the [Docker website](https://docs.docker.com/get-docker/).
 
-## Docker Compose File
+## Docker Compose file
 
-Create a new file called `docker-compose.yml` and open it in a text editor. Copy the following content into the file:
+Save this as `compose.yaml` in a new directory:
 
 ```yaml
-version: "3"
 services:
   wyoming-piper:
     image: rhasspy/wyoming-piper
     ports:
       - "10200:10200"
     volumes:
-      - "./piper-data:/data"
-    command: [ "--voice", "en-gb-southern_english_female-low" ]
+      - ./piper-data:/data
+    command: ["--voice", "en_GB-alba-medium"]
     restart: unless-stopped
 ```
 
-Let's go through the different sections of this Docker Compose file.
+What each part does:
 
-### Version
-
-The `version` section specifies the version of the Docker Compose file format. In this case, we're using version "3".
-
-### Services
-
-The `services` section defines the services that make up your application. In our case, we have a single service called `wyoming-piper`.
-
-### Wyoming Piper Service
-
-Under the `wyoming-piper` service, we have the following configurations:
-
-- `image`: Specifies the Docker image to use for the service. In this case, we're using the `rhasspy/wyoming-piper` image.
-- `ports`: Maps the container's port `10200` to the host's port `10200`. This allows us to access Wyoming Piper's web interface from our local machine.
-- `volumes`: Mounts the `./piper-data` directory on the host to the `/data` directory inside the container. This is used to persist Wyoming Piper's data.
-- `command`: Specifies the command-line arguments to pass to the container. In this example, we're using the English (GB) Southern English Female (Low) voice sample.
-- `restart`: Sets the restart policy for the container. In this case, the container will be automatically restarted unless explicitly stopped.
+- `image` is the official `rhasspy/wyoming-piper` image. Its entrypoint already sets `--uri tcp://0.0.0.0:10200` and `--data-dir /data`, so you only pass the voice.
+- `ports` publishes Wyoming's port 10200. Home Assistant connects here.
+- `volumes` keeps downloaded voices in `./piper-data`. A medium voice is about 63 MB.
+- `command` sets the default voice. My 2023 post used `en-gb-southern_english_female-low`. That still works, and I've switched to `en_GB-alba-medium` because medium voices sound better.
+- `restart: unless-stopped` brings the container back after a reboot.
 
 ## Starting Wyoming Piper
 
-To start Wyoming Piper, open a terminal or command prompt, navigate to the directory where you saved the `docker-compose.yml` file, and run the following command:
-
+```bash
+docker compose up -d
+docker compose logs -f wyoming-piper
 ```
-docker-compose up -d
+
+The first start downloads the voice from Hugging Face, which took a few seconds here. Wait for `Ready`, then press Ctrl+C to leave the logs. `docker compose ps` should show the container as healthy.
+
+There's no web interface to open. Port 10200 speaks the Wyoming protocol over TCP, and `curl http://localhost:10200` returns nothing. I checked, and it's the opposite of what my original post said. Newer images do have an opt-in web UI for managing custom voices, switched on with `--web-server --web-server-host 0.0.0.0`. I haven't used it.
+
+### Test it without Home Assistant
+
+Save the test script from the [Whisper post](https://exitcode0.net/posts/wyoming-whisper-docker-compose/#test-it-without-home-assistant) as `wyoming_check.py`, then run:
+
+```bash
+python3 wyoming_check.py describe localhost 10200
+python3 wyoming_check.py say localhost 10200 en_GB-alba-medium "Wyoming Piper is working."
 ```
 
-The `-d` flag runs the containers in the background (detached mode).
+Mine printed:
 
-Wait for Docker Compose to download the necessary Docker images and start the Wyoming Piper container. You can check the progress in the terminal output.
+```text
+tts: piper, 174 available, e.g. ['ar_JO-kareem-low', 'ar_JO-kareem-medium', 'bg_BG-dimitar-medium']
+2.0s of audio at 22050 Hz in 0.9s
+```
 
-Once the container is up and running, you can access Wyoming Piper's web interface by opening a web browser and navigating to `http://localhost:10200`.
+The script saves the audio as `say.raw`, which the Whisper container can transcribe. That round trip is the quickest way to prove both halves work before Home Assistant is involved.
 
-## Conclusion
+## Choosing a voice
 
-In this blog post, we've walked you through setting up Wyoming Piper using Docker Compose. Docker Compose allows you to manage the different components of Wyoming Piper in a unified and reproducible way. You can customize the configurations in the `docker-compose.yml`
+Voice names follow the pattern `language_REGION-name-quality`, for example `en_GB-alba-medium`. The image still accepts the 2023 hyphenated names and maps them across, but the underscore form is the current naming.
 
-At this point we have all the components needed for a fully local voice assistant stack, deployed with docker compose. It is now possible to follow the remainder of the Home Assistant docuemntation in configuring your assistant: https://www.home-assistant.io/docs/assist/voice_remote_local_assistant.
+Quality is low, medium or high. In my tests low voices produced 16,000 Hz audio and medium voices 22,050 Hz.
+
+The image advertises 174 voices, and you don't have to download them in advance. Ask for one that isn't in `./piper-data` and Piper fetches it on the first request. When I asked for `en_US-lessac-medium`, that first request took 3.6 seconds while it downloaded. Later requests took under a second.
+
+Idle, the container used about 230 MiB of RAM. To change the default voice, edit `--voice` and run `docker compose up -d` again.
+
+## Adding it to Home Assistant
+
+In Home Assistant go to `Settings > Devices & Services > Add Integration`, search for Wyoming Protocol and enter the IP address of the machine running Docker plus port 10200. Use the host's IP, not `localhost`, because inside the Home Assistant container that means Home Assistant itself. Then pick `piper` as the text-to-speech engine in `Settings > Voice assistants`.
+
+Piper and Whisper together are everything the local voice pipeline needs, and with the small Whisper model they used about 1 GiB of RAM between them on my test machine. The remainder of the setup is in Home Assistant's own guide to a [local voice assistant](https://www.home-assistant.io/voice_control/voice_remote_local_assistant/).
+
+## Troubleshooting
+
+### Home Assistant can't connect
+
+Run `nc -zv <docker-host-ip> 10200` from the machine running Home Assistant. If that fails, the problem is the network or a firewall. If it succeeds, check you entered the host's IP and not `localhost`.
+
+### The browser shows nothing at port 10200
+
+That's expected. It's a TCP protocol service, not a web server.
+
+### The first reply is slow
+
+If you picked a voice that hasn't been downloaded yet, the first request waits for the download. Mine took 3.6 seconds. Later ones were fast.
+
+### The voice sounds thin
+
+Low-quality voices are 16 kHz. Switch to the medium version of the same voice.
+
+### The data folder is owned by root
+
+Docker created the files in `piper-data` as root on my machine, so deleting them needs sudo.
+
+### Can I use a GPU?
+
+There's a `--use-cuda` option that needs a GPU-enabled onnxruntime. I haven't tried it, because the machine I tested on has no GPU, and Piper is fast enough on a CPU that I wouldn't bother.
+
+## Both halves agree
+
+`en_GB-alba-medium` says "Wyoming Piper is working." in about two seconds, and `small-int8` Whisper hears the same words back. If something breaks later, look at the Home Assistant wiring before you blame either container.
 
 **Relevant and supporting posts:**
-- [How to Use a Docker Compose File for Wyoming Whisper](https://exitcode0.net/posts/wyoming-whisper-docker-compose/)
-- [Homeassistant Enable MagicDNS and HTTPS Certificates in Tailscale](https://exitcode0.net/posts/homeassistant-tls-with-tailscale/)
 
+- [Wyoming Whisper Docker Compose](https://exitcode0.net/posts/wyoming-whisper-docker-compose/)
+- [Home Assistant HTTPS with Tailscale](https://exitcode0.net/posts/homeassistant-tls-with-tailscale/)
+
+## Or just hand this page to your agent
+
+If you'd rather not type any of this, paste the following into your coding agent:
+
+```text
+Read https://exitcode0.net/posts/wyoming-piper-docker-compose/ and set up Wyoming Piper in Docker Compose on this machine. Before changing anything, run docker compose version and docker ps, check whether port 10200 is already in use, and show me the compose file you plan to write. Ask me which language and voice I want, and don't pick a voice for me. Don't touch my Home Assistant config. Stop once docker compose ps shows the container healthy and tell me the host IP and port to enter in Home Assistant.
+```
+
+The page gives the agent the compose file, the voice naming rules and the test script. Only you know which language you want, which voice sounds right to you and whether port 10200 is free.
+
+Choosing a voice is the fun part, so budget a few minutes at the samples page.
+
+Enjoy. ✌️
 
 
 ---
