@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/home-assistant-firehd8-dashboard/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2024-06-11
-Updated: 2026-10-08
+Updated: 2026-10-13
 Tags: home-automation, home-assistant, hardware, review
 
 
@@ -160,6 +160,8 @@ An added benefit of the Pi is that you can SSH or VNC into it, take make changes
 ## Conclusion
 
 I'm still on the lookout for a sensible alternative to my FireHD8, with fewer drawbacks and compromises, but still at an affordable price point. If you can find the tablet hardware that fits your needs, they make fantastic Home Assistant controllers and go a long way to helping your setup pass the family/friends test - where anyone can walk into your home (with an invite) and interact with your smart home.
+
+I've since found a cheaper candidate. A £50 Android photo frame turned out to be a good Home Assistant wall display once rooted, with a proper stand and a light sensor. [Turning a photo frame into a Home Assistant dashboard](https://exitcode0.net/posts/android-photo-frame-home-assistant-dashboard/) covers the rooting, the WebView swap and Fully Kiosk.
 
 As the HA project progresses, I expect that someone will see the need for a dedicated dashboard/control device which offers wall mounting or neat side table aesthetics, without compromises on software, screen quality and at an strong value price point. Until then, the Amazon FireHD8 tablet is a strong candidate for use as a Home Assistant controller or dashboard viewing device, with very few compromises or caveats for most consumers. If you have a large number of dashboard cards, perhaps take a look at something with a higher DPI.
 
