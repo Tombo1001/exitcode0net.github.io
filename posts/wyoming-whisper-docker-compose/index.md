@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/wyoming-whisper-docker-compose/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2023-05-11
-Updated: 2026-10-08
+Updated: 2026-10-20
 Tags: docker, wyoming, whisper, stt, home-assistant, voice-assistant, docker-compose
 
 > **Updated October 2026:** I re-tested this on 8 October 2026 against the current `rhasspy/wyoming-whisper` image. The compose file no longer needs a `version` line, the default model is now `small-int8` instead of `medium-int8`, and there's a table of measured model speeds, a test script and a troubleshooting section. The Home Assistant steps come from my original post. I haven't re-run them on a current Home Assistant release.
@@ -180,7 +180,7 @@ Now that the server is up, add it in Home Assistant under `Settings > Devices & 
 
 ![Adding the Wyoming Whisper integration to Home Assistant](https://exitcode0.net/images/wyoming-HA-integration.png)
 
-Then open `Settings > Voice assistants`, create or edit an assistant, and choose `faster-whisper` as its speech-to-text engine. The [Home Assistant Wyoming docs](https://www.home-assistant.io/integrations/wyoming/) cover the rest.
+Then open `Settings > Voice assistants`, create or edit an assistant, and choose `faster-whisper` as its speech-to-text engine. The [Home Assistant Wyoming docs](https://www.home-assistant.io/integrations/wyoming/) cover the rest. For the full path from container to a working command, including the two things that tripped me up when I wired both containers into Assist, see [Home Assistant local voice with Whisper and Piper](https://exitcode0.net/posts/home-assistant-local-voice-whisper-piper-docker/).
 
 ## Troubleshooting
 

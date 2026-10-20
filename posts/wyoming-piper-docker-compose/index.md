@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/wyoming-piper-docker-compose/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2023-05-16
-Updated: 2026-10-08
+Updated: 2026-10-20
 Tags: docker, wyoming, piper, tts, home-assistant, voice-assistant, docker-compose
 
 > **Updated October 2026:** I re-tested this on 8 October 2026 against the current `rhasspy/wyoming-piper` image and corrected three things I got wrong in 2023. Piper is text-to-speech, not speech recognition. Port 10200 isn't a web interface. And voices are now named like `en_GB-alba-medium`. The compose file also no longer needs a `version` line. The Home Assistant steps are unchanged from the original and I haven't re-run them on a current release.
@@ -118,6 +118,7 @@ There's a `--use-cuda` option that needs a GPU-enabled onnxruntime. I haven't tr
 **Relevant and supporting posts:**
 
 - [Wyoming Whisper Docker Compose](https://exitcode0.net/posts/wyoming-whisper-docker-compose/)
+- [Home Assistant local voice with Whisper and Piper](https://exitcode0.net/posts/home-assistant-local-voice-whisper-piper-docker/)
 - [Home Assistant HTTPS with Tailscale](https://exitcode0.net/posts/homeassistant-tls-with-tailscale/)
 
 ## Or just hand this page to your agent
