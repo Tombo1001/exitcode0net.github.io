@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/pi-agent-dep-audit-supply-chain/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2026-05-21
-Updated: 2026-10-08
+Updated: 2026-10-23
 Tags: pi-agent, npm, security, supply-chain, typescript, local-ai
 
 
@@ -244,6 +244,8 @@ The extension is working well as a startup health check. A few things I'd like t
 Mini Shai Hulud is a reminder that supply chain security isn't a solved problem, and advisory databases are a lag indicator by design. The extension helps keep tabs on known-bad packages, but it's one tool in a broader set of practices - not a substitute for them.
 
 If you're building Pi extensions yourself, have a look at the [extension architecture post](../understanding-pi-agent-extension-model/) for a breakdown of when to reach for extensions versus skills or context files.
+
+If you let a cheap model summarise advisories or changelogs for you, check its claims against the source before you act. I wrote up [how I check a subagent's research](https://exitcode0.net/posts/verify-claude-code-subagent-research-haiku/) after one invented a policy quote.
 
 
 ---
