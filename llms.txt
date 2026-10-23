@@ -8,6 +8,7 @@ Author: https://exitcode0.net/about/
 Site card: https://exitcode0.net/images/exitcode0-card.jpg
 
 ## Posts
+- [How to Check a Cheap Claude Code Subagent's Research Before You Believe It](https://exitcode0.net/posts/verify-claude-code-subagent-research-haiku/index.md): Two Haiku subagents gave me confident research. One invented a Google policy quote and misdescribed a Home Assistant release. Here's the check I run now.
 - [Wyoming Piper Docker Compose: Local Text-to-Speech for Home Assistant](https://exitcode0.net/posts/wyoming-piper-docker-compose/index.md): Run Wyoming Piper text-to-speech in Docker Compose for Home Assistant. Tested compose file, voice naming, 174 voices and corrections to my 2023 post.
 - [Wyoming Whisper Docker Compose: Local Speech-to-Text for Home Assistant](https://exitcode0.net/posts/wyoming-whisper-docker-compose/index.md): Run Wyoming Whisper speech-to-text in Docker Compose for Home Assistant. Tested compose file, model speeds measured on a Ryzen 5 5600 and a test script.
 - [Home Assistant Local Voice Assistant with Whisper and Piper in Docker](https://exitcode0.net/posts/home-assistant-local-voice-whisper-piper-docker/index.md): Build a Home Assistant voice assistant that never leaves your LAN: Whisper, Piper and Assist in one Docker Compose file, with measured speeds and two gotchas.
