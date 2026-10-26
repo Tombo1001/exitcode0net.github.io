@@ -5,14 +5,14 @@
 Source: https://exitcode0.net/posts/adding-bluetooth-to-a-vw-rcd-300/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2021-06-18
-Updated: 2026-10-08
+Updated: 2026-10-26
 Tags: bluetooth, rcd-300, vw-caddy
 
 
 I own a basic VW Caddy MK3 (2009) which was equipped with a RCD 300 head unit. It did not come with the aux function/connectivity and this post explains how I added Bluetooth connectivity. This was a very simple installation with no requirement for VCDS coding; the Bluetooth adapter replicates a CD changer.
 
-[![RCD 300 bluetooth adapter.](https://images-na.ssl-images-amazon.com/images/I/71ADP1kOkSL._AC_SL1500_.jpg)](https://amazon.co.uk/gp/product/B0773P8HM5 "https://amazon.co.uk/gp/product/B0773P8HM5")
-At the time of writing this article, I was able to purchase this adapter on Amazon UK for ~£35 – [https://amazon.co.uk/gp/product/B0773P8HM5](https://amazon.co.uk/gp/product/B0773P8HM5 "https://amazon.co.uk/gp/product/B0773P8HM5")
+[![RCD 300 bluetooth adapter.](https://images-na.ssl-images-amazon.com/images/I/71ADP1kOkSL._AC_SL1500_.jpg)](https://www.amazon.co.uk/dp/B0773P8HM5?tag=tomc03081001-21 "RCD 300 Bluetooth adapter on Amazon UK")
+When I wrote this post in 2021 the adapter cost about £35 on Amazon UK. On 26 October 2026 it was in stock at £45.90: [Handsfree Bluetooth Audio 12pin for VW on Amazon UK](https://www.amazon.co.uk/dp/B0773P8HM5?tag=tomc03081001-21 "RCD 300 Bluetooth adapter on Amazon UK"). It's an affiliate link, so I earn a small commission if you buy through it. The price to you is the same.
 
 ## Installation
 
