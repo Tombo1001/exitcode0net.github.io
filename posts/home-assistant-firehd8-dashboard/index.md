@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/home-assistant-firehd8-dashboard/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2024-06-11
-Updated: 2026-10-13
+Updated: 2026-10-27
 Tags: home-automation, home-assistant, hardware, review
 
 
@@ -114,6 +114,8 @@ There are some novel 3D printed solutions for wall mounting:
 ![Printable FireHD10 wall mount](https://exitcode0.net/images/fire-tablet-wall-mount.jpg)
 
 - https://www.printables.com/model/383856-wall-mount-for-fire-tablet-hd-10-11th-gen-2021
+
+If you'd rather print something for a smaller device, [a parametric OpenSCAD mount for a Zigbee sensor](https://exitcode0.net/posts/openscad-claude-code-parametric-sensor-mount/) takes the same idea down to sensor size, with the measurements as variables.
 
 ## Alternatives
 
