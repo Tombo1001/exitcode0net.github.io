@@ -8,6 +8,7 @@ Author: https://exitcode0.net/about/
 Site card: https://exitcode0.net/images/exitcode0-card.jpg
 
 ## Posts
+- [Parametric Sensor Mount in OpenSCAD with Claude Code: A Home Assistant 3D Print](https://exitcode0.net/posts/openscad-claude-code-parametric-sensor-mount/index.md): Have Claude Code write a parametric OpenSCAD wall mount for a Zigbee sensor, then check it for real: manifold test, fit test and preview. Includes the full file.
 - [How I Turned My Laptop Into a Dumb Terminal With a Tailscale Dev VM, T3 Code, and Claude Code](https://exitcode0.net/posts/dumb-terminal-dev-vm-tailscale-claude-code/index.md): A persistent dev VM over Tailscale running T3 Code and Claude Code turns any laptop into a thin client, and why I'm stripping Windows down instead of upgrading.
 - [Adding Bluetooth to a VW RCD 300](https://exitcode0.net/posts/adding-bluetooth-to-a-vw-rcd-300/index.md): Add Bluetooth to a VW RCD 300 head unit with a CD changer adapter. No VCDS coding, wireless music in a Caddy or Transporter without replacing the radio.
 - [Building a Dependency Audit Extension for Pi Agent - and What Mini Shai Hulud Taught Me About npm Supply Chains](https://exitcode0.net/posts/pi-agent-dep-audit-supply-chain/index.md): A TypeScript extension for Pi Agent that audits installed npm packages against the advisory database at startup. How it works and where it falls short.
