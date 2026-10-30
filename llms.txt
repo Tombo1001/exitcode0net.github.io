@@ -8,6 +8,7 @@ Author: https://exitcode0.net/about/
 Site card: https://exitcode0.net/images/exitcode0-card.jpg
 
 ## Posts
+- [Serve Markdown and llms.txt from Hugo So AI Agents Can Read Your Posts](https://exitcode0.net/posts/hugo-markdown-output-llms-txt-ai-agents/index.md): Add a Markdown copy of every Hugo post and an llms.txt index. Config, both templates, measured sizes (about a quarter of the HTML) and the gotchas.
 - [Using an Amazon FireHD8 as a Home Assistant Dashboard Control Panel](https://exitcode0.net/posts/home-assistant-firehd8-dashboard/index.md): Using an Amazon Fire HD 8 as a wall-mounted Home Assistant control panel: setup, docking, the pros and cons, and the alternatives I considered.
 - [Parametric Sensor Mount in OpenSCAD with Claude Code: A Home Assistant 3D Print](https://exitcode0.net/posts/openscad-claude-code-parametric-sensor-mount/index.md): Have Claude Code write a parametric OpenSCAD wall mount for a Zigbee sensor, then check it for real: manifold test, fit test and preview. Includes the full file.
 - [How I Turned My Laptop Into a Dumb Terminal With a Tailscale Dev VM, T3 Code, and Claude Code](https://exitcode0.net/posts/dumb-terminal-dev-vm-tailscale-claude-code/index.md): A persistent dev VM over Tailscale running T3 Code and Claude Code turns any laptop into a thin client, and why I'm stripping Windows down instead of upgrading.
