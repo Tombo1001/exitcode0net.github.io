@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/claude-code-browser-docker-playwright-mcp/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2026-09-25
-Updated: 2026-10-08
+Updated: 2026-10-30
 Tags: claude-code, playwright, mcp, chromium, docker, vnc, tailscale, t3-code, screenshots, hugo
 
 
@@ -278,6 +278,7 @@ The cover of this post is the same trick in reverse. It's an HTML card that the 
 - One browser, shared. Two agent sessions using it at once is fine as long as each sticks to its own tab, but they share cookies and logins. Treat the profile folder like a password store.
 - VNC password auth is weak on its own. Don't publish port 5900 anywhere except the tailnet.
 - The agent must never buy, bid or message anyone. The skill says so, and anything that commits money waits for me over VNC.
+- Your own site doesn't need any of this. If you want agents to read your pages without a browser, [serve Markdown and an llms.txt from Hugo](https://exitcode0.net/posts/hugo-markdown-output-llms-txt-ai-agents/).
 
 ## Quick reference
 

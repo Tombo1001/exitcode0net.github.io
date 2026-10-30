@@ -8,6 +8,7 @@ Author: https://exitcode0.net/about/
 Site card: https://exitcode0.net/images/exitcode0-card.jpg
 
 ## Posts
+- [How to Give Claude Code a Real Browser: Headful Chromium in Docker with Playwright MCP](https://exitcode0.net/posts/claude-code-browser-docker-playwright-mcp/index.md): Run a headful Chromium in Docker on your dev VM so Claude Code can browse, shop and screenshot sites with no laptop on, and watch it over VNC from a phone.
 - [Serve Markdown and llms.txt from Hugo So AI Agents Can Read Your Posts](https://exitcode0.net/posts/hugo-markdown-output-llms-txt-ai-agents/index.md): Add a Markdown copy of every Hugo post and an llms.txt index. Config, both templates, measured sizes (about a quarter of the HTML) and the gotchas.
 - [Using an Amazon FireHD8 as a Home Assistant Dashboard Control Panel](https://exitcode0.net/posts/home-assistant-firehd8-dashboard/index.md): Using an Amazon Fire HD 8 as a wall-mounted Home Assistant control panel: setup, docking, the pros and cons, and the alternatives I considered.
 - [Parametric Sensor Mount in OpenSCAD with Claude Code: A Home Assistant 3D Print](https://exitcode0.net/posts/openscad-claude-code-parametric-sensor-mount/index.md): Have Claude Code write a parametric OpenSCAD wall mount for a Zigbee sensor, then check it for real: manifold test, fit test and preview. Includes the full file.
@@ -84,7 +85,6 @@ Site card: https://exitcode0.net/images/exitcode0-card.jpg
 - [Testing Llama3.1 (8B) With LM Studio](https://exitcode0.net/posts/testing-llama3_1-with-gpt4all/index.md): Taking a look at the the latest open source llama 3.1 model after its July 2024 release. Testing its performance and accuracy with GPT4ALL.
 - [How to Migrate VMs Between Standalone Proxmox Nodes Without Clustering](https://exitcode0.net/posts/migrate-vm-between-standalone-proxmox-nodes/index.md): A complete guide to migrating VMs between standalone Proxmox hosts without clustering, using vzdump streaming over SSH
 - [Visualising Temperature and Humidity in Home Assistant with Mini Graph Card](https://exitcode0.net/posts/mini-graph-card-temperature-humidity-home-assistant/index.md): Visualise SwitchBot temperature and humidity sensors on your Home Assistant dashboard using mini-graph-card from HACS - with colour thresholds and dual axes.
-- [How to Give Claude Code a Real Browser: Headful Chromium in Docker with Playwright MCP](https://exitcode0.net/posts/claude-code-browser-docker-playwright-mcp/index.md): Run a headful Chromium in Docker on your dev VM so Claude Code can browse, shop and screenshot sites with no laptop on, and watch it over VNC from a phone.
 - [How to Build a Baby Sleep Tog Widget in Home Assistant with button-card](https://exitcode0.net/posts/home-assistant-baby-sleep-tog-widget/index.md): A Home Assistant button-card that reads each room's temperature and shows which tog sleeping bag and clothing layers a baby needs, using NHS 16-20°C advice.
 
 ## Other pages
