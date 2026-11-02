@@ -8,6 +8,7 @@ Author: https://exitcode0.net/about/
 Site card: https://exitcode0.net/images/exitcode0-card.jpg
 
 ## Posts
+- [How to Check and Mitigate CVE-2026-98432 (Linux Kernel TCP Use-After-Free) on Ubuntu](https://exitcode0.net/posts/linux-kernel-tcp-cve-2026-98432-mptcp-mitigation/index.md): CVE-2026-98432 is a 9.8 Linux TCP flaw with no Ubuntu fix yet. How to check your kernel, find MPTCP listeners, filter it with nftables and look for IOCs.
 - [How to Give Claude Code a Real Browser: Headful Chromium in Docker with Playwright MCP](https://exitcode0.net/posts/claude-code-browser-docker-playwright-mcp/index.md): Run a headful Chromium in Docker on your dev VM so Claude Code can browse, shop and screenshot sites with no laptop on, and watch it over VNC from a phone.
 - [Serve Markdown and llms.txt from Hugo So AI Agents Can Read Your Posts](https://exitcode0.net/posts/hugo-markdown-output-llms-txt-ai-agents/index.md): Add a Markdown copy of every Hugo post and an llms.txt index. Config, both templates, measured sizes (about a quarter of the HTML) and the gotchas.
 - [Using an Amazon FireHD8 as a Home Assistant Dashboard Control Panel](https://exitcode0.net/posts/home-assistant-firehd8-dashboard/index.md): Using an Amazon Fire HD 8 as a wall-mounted Home Assistant control panel: setup, docking, the pros and cons, and the alternatives I considered.
