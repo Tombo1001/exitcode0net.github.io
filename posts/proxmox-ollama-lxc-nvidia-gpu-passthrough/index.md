@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/proxmox-ollama-lxc-nvidia-gpu-passthrough/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2026-03-22
-Updated: 2026-10-08
+Updated: 2026-11-03
 Tags: proxmox, ollama, nvidia, lxc, tailscale, llm, self-hosted, homelab, linux
 
 
@@ -298,7 +298,7 @@ The API is useful for scripting and integrations, but for general use a web inte
 
 The simplest deployment is a Docker Compose stack on a separate VM or machine on your LAN, pointing `OLLAMA_BASE_URL` at `http://<your-container-ip>:11434`. If you're running Tailscale everywhere, you can also point it at the Tailnet address for cross-site access. If you work from a [persistent dev VM over Tailscale](https://exitcode0.net/posts/dumb-terminal-dev-vm-tailscale-claude-code/), the same address works from there too.
 
-Open WebUI is out of scope for this post but worth looking at if you want something more usable than raw `curl` commands.
+Open WebUI is out of scope for this post but worth looking at if you want something more usable than raw `curl` commands. The same container also works as a Home Assistant conversation agent. [Which model works](https://exitcode0.net/posts/home-assistant-ollama-conversation-agent-local-llm/) compares three of them on 18 commands each.
 
 ---
 
