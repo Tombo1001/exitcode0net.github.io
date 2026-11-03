@@ -8,6 +8,7 @@ Author: https://exitcode0.net/about/
 Site card: https://exitcode0.net/images/exitcode0-card.jpg
 
 ## Posts
+- [Home Assistant Conversation Agent with a Local Ollama Model: Which Model Works](https://exitcode0.net/posts/home-assistant-ollama-conversation-agent-local-llm/index.md): Point Home Assistant's Assist at a local Ollama model. I tested gemma4 and qwen3.5 on an RTX 3060 with 18 commands each. One passed all 18, one passed 6.
 - [How to Check and Mitigate CVE-2026-98432 (Linux Kernel TCP Use-After-Free) on Ubuntu](https://exitcode0.net/posts/linux-kernel-tcp-cve-2026-98432-mptcp-mitigation/index.md): CVE-2026-98432 is a 9.8 Linux TCP flaw with no Ubuntu fix yet. How to check your kernel, find MPTCP listeners, filter it with nftables and look for IOCs.
 - [How to Give Claude Code a Real Browser: Headful Chromium in Docker with Playwright MCP](https://exitcode0.net/posts/claude-code-browser-docker-playwright-mcp/index.md): Run a headful Chromium in Docker on your dev VM so Claude Code can browse, shop and screenshot sites with no laptop on, and watch it over VNC from a phone.
 - [Serve Markdown and llms.txt from Hugo So AI Agents Can Read Your Posts](https://exitcode0.net/posts/hugo-markdown-output-llms-txt-ai-agents/index.md): Add a Markdown copy of every Hugo post and an llms.txt index. Config, both templates, measured sizes (about a quarter of the HTML) and the gotchas.
