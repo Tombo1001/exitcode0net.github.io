@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/proxmox-ollama-lxc-nvidia-gpu-passthrough/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2026-03-22
-Updated: 2026-11-03
+Updated: 2026-11-10
 Tags: proxmox, ollama, nvidia, lxc, tailscale, llm, self-hosted, homelab, linux
 
 
@@ -15,7 +15,7 @@ Running large language models locally is genuinely useful — no API costs, no r
  
 VM GPU passthrough wasn't an option here — no iGPU meant the host would have had no display output once the card was handed off. LXC was the practical solution, and it turns out to be a good one anyway: containers share the host kernel directly, so the GPU stays bound to the host's NVIDIA driver and the container accesses it via bind-mounted device nodes and cgroup permissions. On top of that, LXCs are lighter weight than VMs, with less overhead and near-instant startup times. For a dedicated service like Ollama, it's a solid fit.
 
-This guide documents the full process: NVIDIA driver setup on the PVE host, creating and configuring the LXC, installing Ollama with GPU support, and optionally exposing it over a Tailscale network. It's been tested on Proxmox VE 8 (Debian Bookworm) with a consumer NVIDIA GPU. We will push the boat out and include Tailscale to make the Ollama API available within our Tailnet (optional).
+This guide documents the full process: NVIDIA driver setup on the PVE host, creating and configuring the LXC, installing Ollama with GPU support, and optionally exposing it over a Tailscale network. It's been tested on Proxmox VE 8 (Debian Bookworm) with a consumer NVIDIA GPU. We will push the boat out and include Tailscale to make the Ollama API available within our Tailnet (optional). For how this container fits with Open WebUI, Home Assistant and the coding agents, see the [Local AI on Proxmox guide](https://exitcode0.net/posts/local-ai-on-proxmox-complete-homelab-guide/).
 
 > **Updated October 2026:** Proxmox VE 9 (Debian 13 Trixie) has been out for a while. I haven't rebuilt this container on it yet, but nothing below is version-specific apart from the Debian template name, so swap `debian-12-standard` for the `debian-13-standard` template if you're on VE 9. The cgroup2 device rules and the bind mounts are the same on both. Also added: a model size versus VRAM table, troubleshooting as proper headings, and the agent handoff block at the end.
 
