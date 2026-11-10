@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/dumb-terminal-dev-vm-tailscale-claude-code/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2026-09-24
-Updated: 2026-11-06
+Updated: 2026-11-10
 Tags: tailscale, claude-code, t3-code, self-hosted, proxmox, remote-development, omarchy, thin-client, scp, windows
 
 
@@ -152,6 +152,8 @@ A few caveats before you assume this fixes everything:
 ## Where this goes next
 
 A couple of things have already shipped out of this setup. [CarSearch](https://tombo1001.github.io/carsearch/) - a free tool that reads a Google Timeline export, picks out a car, and shows which UK clean-air, low-emission, and congestion zones you actually drive through, and what they'd charge you - was built entirely on `forge`. So was the latest round of updates to [Smart Home Index](https://smarthomeindex.com/), the DataSolace resource for finding and comparing smart home IoT devices.
+
+[**voiceloop**](https://voiceloop.dev) came out of it too. `forge` has no speakers, so **voiceloop** reads Claude Code's replies aloud on the Windows PC in front of me, with Handy for dictation and a three-key macropad for the rest. The write-up is [Claude Code voice control on Windows](https://exitcode0.net/posts/claude-code-voice-control-windows/).
 
 If you're weighing whether to go looking for local compute to run agents against instead, it's also worth reading [running Ollama in a Proxmox LXC with GPU passthrough](https://exitcode0.net/posts/proxmox-ollama-lxc-nvidia-gpu-passthrough/) - a genuinely useful complement for the parts of this workflow where a frontier model is overkill. I've also tested [pointing Claude Code at that Ollama model](https://exitcode0.net/posts/claude-code-local-ollama-model-anthropic-api/), with timings on two small tasks.
 
