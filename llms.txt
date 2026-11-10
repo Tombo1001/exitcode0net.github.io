@@ -8,6 +8,7 @@ Author: https://exitcode0.net/about/
 Site card: https://exitcode0.net/images/exitcode0-card.jpg
 
 ## Posts
+- [Local AI on Proxmox: The Complete Homelab Guide (2026)](https://exitcode0.net/posts/local-ai-on-proxmox-complete-homelab-guide/index.md): How to run local LLMs, voice and image generation on a Proxmox homelab: GPU choice, LXC vs VM, Ollama, Open WebUI, Tailscale access, agents and backups.
 - [How I Turned My Laptop Into a Dumb Terminal With a Tailscale Dev VM, T3 Code, and Claude Code](https://exitcode0.net/posts/dumb-terminal-dev-vm-tailscale-claude-code/index.md): A persistent dev VM over Tailscale running T3 Code and Claude Code turns any laptop into a thin client, and why I'm stripping Windows down instead of upgrading.
 - [Claude Code with a Local Ollama Model: Setup, and What a 12 GB GPU Can Do](https://exitcode0.net/posts/claude-code-local-ollama-model-anthropic-api/index.md): Run Claude Code against a local Ollama model with three environment variables. I timed gemma4 and qwen3.5 on two small coding tasks on an RTX 3060.
 - [Running Ollama in a Proxmox LXC with NVIDIA GPU Passthrough](https://exitcode0.net/posts/proxmox-ollama-lxc-nvidia-gpu-passthrough/index.md): Set up Ollama in a Proxmox LXC with NVIDIA GPU passthrough, Tailscale access and Open WebUI. Run local LLMs with GPU acceleration on your own hardware.
