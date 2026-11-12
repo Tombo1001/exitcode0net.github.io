@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/mini-graph-card-temperature-humidity-home-assistant/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2026-05-07
-Updated: 2026-10-08
+Updated: 2026-11-12
 Tags: home-automation, home-assistant, hacs, mini-graph-card, switchbot, lovelace
 
 
@@ -210,7 +210,7 @@ Make sure `lower_bound_secondary` and `upper_bound_secondary` are set at the car
 
 ---
 
-Mini Graph Card is one of those HACS installs that I put on every dashboard I build. The colour threshold feature alone is worth it - there's an immediate visual read on whether things are in range without having to look at the numbers. Pair it with a couple of SwitchBot sensors and you've got decent environmental monitoring for very little outlay.
+Mini Graph Card is one of those HACS installs that I put on every dashboard I build. The colour threshold feature alone is worth it - there's an immediate visual read on whether things are in range without having to look at the numbers. Pair it with a couple of SwitchBot sensors and you've got decent environmental monitoring for very little outlay. My study view also has a SwitchBot presence sensor next to the graph, which [fades the desk screens off when I leave](https://exitcode0.net/posts/home-assistant-presence-sensor-desk-screens/).
 
 If you're building out a home lab monitoring setup, the [Uptime Kuma with Docker Compose](https://exitcode0.net/posts/running-uptime-kuma-with-docker-compose/) post is worth a look for the services side of things.
 

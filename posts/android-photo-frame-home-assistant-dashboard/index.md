@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/android-photo-frame-home-assistant-dashboard/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2026-10-13
-Updated: 2026-10-13
+Updated: 2026-11-12
 Tags: home-assistant, android, photo-frame, fully-kiosk, claude-code, root, adb, dashboard, allwinner
 
 
@@ -290,6 +290,8 @@ Edit the file on the host. The frame's toybox `sed` mangled the line on the firs
 | Back out of Settings | `am start` the Home activity over adb. There is no Back button |
 
 ## Would I do it again
+
+Since this post, the frame has joined my study's presence automation. When I leave the desk it dims to 5 rather than turning off, because a sleeping frame ignores touch. That's in [turning monitors off when you leave the desk](https://exitcode0.net/posts/home-assistant-presence-sensor-desk-screens/).
 
 Yes, but I'd budget the day, not the hour the video suggests. The rooting half only went smoothly because the agent measured the window before writing into it, and because a factory reset is cheap to repeat. If the frame that turns up is the Rockchip one, you'll skip most of Part 1. If it's the A33 and you own an SD card and a Linux box, the repo's Route U is the better-trodden path than the recovery window.
 

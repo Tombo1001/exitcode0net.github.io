@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/home-assistant-with-esphome-bluetooth-proxies/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2025-01-08
-Updated: 2026-10-08
+Updated: 2026-11-12
 Tags: home-automation, home-assistant, esphome, switchbot
 
 
@@ -165,6 +165,8 @@ This project has been a great starting point for other ESPHome-based Bluetooth i
 ## Conclusion
 
 By using an ESP32 running ESPHome as a Bluetooth proxy, I’ve unlocked the full potential of Bluetooth integrations in Home Assistant, even in a containerized setup. The SwitchBot BLE Thermo-Hygrometer is just one example of the possibilities this setup offers. Whether you’re looking to monitor environmental conditions, enable presence detection, or control Bluetooth-enabled devices, this approach provides flexibility and scalability.
+
+The same proxy now picks up a SwitchBot mmWave presence sensor in my study, which [turns my monitors off when I leave the desk](https://exitcode0.net/posts/home-assistant-presence-sensor-desk-screens/).
 
 
 

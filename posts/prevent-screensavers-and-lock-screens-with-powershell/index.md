@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/prevent-screensavers-and-lock-screens-with-powershell/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-03-26
-Updated: 2026-10-08
+Updated: 2026-11-12
 Tags: code, powershell, windows
 
 
@@ -18,6 +18,8 @@ Prevent Screensavers and Lock-screens
 -------------------------------------
 
 The bulk of the code below has been lifted from this great write up: [https://dmitrysotnikov.wordpress.com/2009/06/29/prevent-desktop-lock-or-screensaver-with-powershell/](https://dmitrysotnikov.wordpress.com/2009/06/29/prevent-desktop-lock-or-screensaver-with-powershell/ "https://dmitrysotnikov.wordpress.com/2009/06/29/prevent-desktop-lock-or-screensaver-with-powershell/") I just took things one step further by adding an infinite loop. My version of this code will run indefinitely.
+
+> **Note:** Want the opposite, screens that turn off when you walk away? I do that with a presence sensor and Home Assistant in [turning monitors off when you leave the desk](https://exitcode0.net/posts/home-assistant-presence-sensor-desk-screens/).
 
 *Affectionately named: **PScaffeine***
 The following code sends a relatively harmless (for most cases – change where appropriate) key to the system emulating a keypress on a human interface device:
