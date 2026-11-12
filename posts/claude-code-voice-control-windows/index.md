@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/claude-code-voice-control-windows/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2026-11-10
-Updated: 2026-11-10
+Updated: 2026-11-12
 Tags: claude-code, voice-control, speech-to-text, text-to-speech, tts, voiceloop, t3-code, kokoro, handy, claude-code-hooks, macropad, 3d-printing, windows, self-hosted
 
 
@@ -87,7 +87,7 @@ Already run a different speech server? From 0.8.2 any server with an OpenAI-styl
 
 ### 2. Install voiceloop on the Windows PC
 
-> *Apologies up front: I don't have a code-signing certificate. I'm an indie dev offering a fix for a problem that probably doesn't exist outside my own lab. If you rightly have trust issues, have your agent review the code in the [repo](https://github.com/Tombo1001/voiceloop) before you run anything, and if it finds a problem, please [raise a security issue](https://github.com/Tombo1001/voiceloop/issues).*
+> *Apologies up front: I don't have a code-signing certificate. I'm an indie dev offering a fix for a problem that probably doesn't exist outside my own lab. If you rightly have trust issues, have your agent review the code in the [repo](https://github.com/Tombo1001/voiceloop) before you run anything, and if it finds a problem, please [report it privately](https://github.com/Tombo1001/voiceloop/security/advisories/new).*
 
 1. Download `voiceloop-<version>-windows.zip` from the [releases page](https://github.com/Tombo1001/voiceloop/releases) and unzip it. 0.8.2 is the latest as I write this.
 2. Right-click `install.ps1` and choose **Run with PowerShell**. To let only your Claude Code machine through the firewall, run it from an administrator PowerShell instead:
