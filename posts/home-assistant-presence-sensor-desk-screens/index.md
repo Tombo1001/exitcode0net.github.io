@@ -5,14 +5,14 @@
 Source: https://exitcode0.net/posts/home-assistant-presence-sensor-desk-screens/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2026-11-12
-Updated: 2026-11-12
+Updated: 2026-11-13
 Tags: home-assistant, switchbot, mmwave, presence-sensor, bluetooth, ddc-ci, mqtt, button-card, energy-saving
 
 
 
 My study has five things that glow: two desk monitors, a wall-mounted dashboard screen, a strip light and a [custom Home Assistant display frame](https://exitcode0.net/posts/android-photo-frame-home-assistant-dashboard/) I built from a cheap Android photo frame. Every time I got up to make a coffee, all five stayed on and lit an empty room. Now they notice I've gone. A minute after I stand up, everything fades down together, and when I sit back down it all comes back. Not at 3am, though.
 
-The whole thing is a [SwitchBot mmWave presence sensor](https://www.amazon.co.uk/dp/B0FSRJT4KW?tag=ds02345982734-21), two Home Assistant scripts, one automation, and a small Windows app of mine that makes the monitors show up in Home Assistant as dimmable lights. It also covers the two bugs that showed up the next morning, because they're the bits you'd hit too.
+The whole thing is a [SwitchBot mmWave presence sensor](https://www.amazon.co.uk/dp/B0FSRJT4KW?tag=ds02345982734-21), two Home Assistant scripts, one automation, and a small Windows app of mine that makes the monitors show up in Home Assistant as dimmable lights. It also covers the two bugs that showed up the next morning, and a third that hid in the fade for a day before it broke something, because they're the bits you'd hit too.
 
 **The short version**, if you only want the shape of it:
 
@@ -21,6 +21,8 @@ The whole thing is a [SwitchBot mmWave presence sensor](https://www.amazon.co.uk
 - Save the room's state before fading, restore it on return, and only restore inside "wake hours".
 - Monitors keep their own brightness, so catch them waking up rather than trusting a saved value.
 - At about 80 W and 30p per kWh, 20 empty minutes a day saves roughly £3 a year. An hour a day is nearer £9.
+
+> **Updated 13 November 2026:** the away script below had a bug. Three of its parallel branches shared a variable called `start`. The YAML is fixed, and [the story is further down](#a-day-later-the-wall-screen-stopped-turning-off). If you copied the script before this date, rename those variables.
 
 ![The Study dashboard in Home Assistant with the occupancy badge, the Auto Occupancy tile with its wake hours, the strip light and frame, the wall screen at 50% and both desk monitors at 90%](https://exitcode0.net/images/home-assistant-presence-sensor-desk-screens-dashboard.jpg)
 
@@ -192,7 +194,7 @@ study_occupancy_away:
               state: "on"
           then:
             - variables:
-                start: "{{ states('number.wall_screen_brightness') | int(0) }}"
+                wall_start: "{{ states('number.wall_screen_brightness') | int(0) }}"
             - repeat:
                 count: 5
                 sequence:
@@ -200,7 +202,7 @@ study_occupancy_away:
                     target:
                       entity_id: number.wall_screen_brightness
                     data:
-                      value: "{{ (start * (5 - repeat.index) / 5) | round(0) | int }}"
+                      value: "{{ [[(wall_start * (5 - repeat.index) / 5) | round(0) | int, 100] | min, 0] | max }}"
                   - delay: 3
             - action: switch.turn_off
               target:
@@ -218,7 +220,7 @@ study_occupancy_away:
                 then:
                   - variables:
                       mon: "{{ repeat.item }}"
-                      start: "{{ state_attr(repeat.item, 'brightness') | int(230) }}"
+                      mon_start: "{{ state_attr(repeat.item, 'brightness') | int(230) }}"
                   - repeat:
                       count: 4
                       sequence:
@@ -226,7 +228,7 @@ study_occupancy_away:
                           target:
                             entity_id: "{{ mon }}"
                           data:
-                            brightness: "{{ [(start * (5 - repeat.index) / 5) | round(0) | int, 1] | max }}"
+                            brightness: "{{ [(mon_start * (5 - repeat.index) / 5) | round(0) | int, 1] | max }}"
                         - delay: 3
                   - action: light.turn_off
                     target:
@@ -239,7 +241,7 @@ study_occupancy_away:
               above: 5
           then:
             - variables:
-                start: "{{ states('number.frame_brightness') | int(117) }}"
+                frame_start: "{{ states('number.frame_brightness') | int(117) }}"
             - repeat:
                 count: 5
                 sequence:
@@ -247,11 +249,13 @@ study_occupancy_away:
                     target:
                       entity_id: number.frame_brightness
                     data:
-                      value: "{{ (5 + (start - 5) * (5 - repeat.index) / 5) | round(0) | int }}"
+                      value: "{{ (5 + (frame_start - 5) * (5 - repeat.index) / 5) | round(0) | int }}"
                   - delay: 3
 ```
 
 The monitors can't do transitions over DDC/CI, so the fade is a handful of brightness writes three seconds apart. That's enough steps to read as a fade without hammering the monitor. The whole thing takes about 25 seconds.
+
+Each branch keeps its starting level in its own variable: `wall_start`, `mon_start`, `frame_start`. They have to differ. Since [Home Assistant 2025.4](https://www.home-assistant.io/blog/2025/04/02/release-20254/), a `variables` step writes to the whole script run, so the branches of a `parallel` block share one set of variables. The first version of this script called all three `start`, and [it went wrong a day later](#a-day-later-the-wall-screen-stopped-turning-off).
 
 ### The back script
 
@@ -417,6 +421,48 @@ Those numbers sit close to what I'd been setting by hand for the previous two da
 
 The back script calls it, and a second automation calls it whenever the wall screen's switch goes `on` during wake hours. That covers the screen's own morning schedule turning it on, as well as me turning it on by hand. Tested by switching the screen off, setting it to 5% to copy what the fade leaves, and switching it on again: it went straight to 50% at 60 lx.
 
+## A day later: the wall screen stopped turning off
+
+The day after I published this, the wall screen stopped going dark with everything else. The monitors faded and switched off as usual. The wall screen dimmed one notch and stayed on.
+
+I'd been changing the wall screen's own software that week, so I blamed that first. It was innocent. The Home Assistant log had the answer:
+
+```text
+Value 138.0 for number.wall_screen_brightness is outside valid range 0.0 - 100.0
+```
+
+Nothing in the script should ever ask a 0-100% backlight for 138. But 138 is 230 × 3/5, and 230 is the monitors' 90% brightness on their 0-255 scale. The wall screen's fade was doing its sums with the monitors' number.
+
+The first version of the away script had three branches that each did this:
+
+```yaml
+- variables:
+    start: "{{ ... this device's current brightness ... }}"
+```
+
+I'd assumed each branch of a `parallel` block got its own copy of `start`. It doesn't. Since Home Assistant 2025.4, a `variables` step that names a new variable creates it for the whole script run, and any later step with the same name overwrites it. Parallel branches are no exception. Whichever branch sets `start` last wins, and every fade uses that value from its next step on.
+
+That also explains why it took a day to break. The branches set `start` in order: wall screen, monitors, frame. With the frame lit, the frame's 117 was the last write. The history shows what the wall screen had been doing on every run since I built it:
+
+| Fade step | Wall screen brightness |
+| --- | --- |
+| start | 50% |
+| 1 | 40% |
+| 2 | **70%** |
+| 3 | 47% |
+| 4 | 23% |
+| 5 | 0%, then HDMI off |
+
+It dimmed, jumped up to 70%, then dimmed again. Home Assistant accepts a wrong value that still lands between 0 and 100, and I was walking out of the room at the time, so I never saw it. The monitors were fading from 117 instead of 230 as well.
+
+Then one day the frame was already at 0. Its branch was skipped, the monitors' 230 was the last write, and step two asked the wall screen for 138%. Home Assistant refused the call, the error ended that branch, and the script never reached the line that cuts HDMI. The other branches carried on, which is why the monitors still went off. Six runs failed that afternoon before I looked at the log.
+
+The fix is the version of the script above: one variable name per branch, plus a clamp on the wall screen value so a bad number can't stop the branch before the switch-off. One trap while writing the clamp. Jinja's `min` and `max` filters take a list, so `value | min(100)` throws `'int' object is not iterable`. Write `[[value, 100] | min, 0] | max`.
+
+I tested it by running the away script at the desk. The wall screen went from 30% down to 0 and off, then came back on at 30% from the back script.
+
+If you copied the script before 13 November 2026, rename the three `start` variables. Yours may look fine today, as mine did.
+
 ## Smaller things worth knowing
 
 - **Clashing schedules.** The wall screen has its own overnight off schedule, and it originally ended at 08:00 while my wake hours started at 07:00. The restore skipped it, correctly, and I spent a minute thinking it was broken. Line the schedules up.
@@ -468,6 +514,8 @@ The temperature graph next to it is the same [mini-graph-card](https://exitcode0
 | Monitors wake very dim | Monitor kept the last fade step. Add the wake-at-90% automation |
 | Restore and fade fight each other | Automation not in `mode: restart`, or the back branch doesn't stop the away script |
 | A monitor "off" but still lit | Some monitors ignore DDC standby from certain inputs. Test sleep and wake at the desk first |
+| One device dims a step, then stays on | A fade step failed and ended that branch. Check the log for "outside valid range". Parallel branches were sharing a variable name |
+| A screen brightens partway through the fade | Same cause, with a value that happened to be in range |
 
 ## What it actually saves
 
@@ -505,7 +553,7 @@ Honestly, it won't pay for itself fast. I'd build it again anyway for the fade, 
 
 ## Two evenings and a morning
 
-The point was energy, and the honest saving at 20 minutes a day is about £3 a year. Four screens and a light strip that used to stay on through every coffee break now go dark within a minute, though, and that adds up as the empty hours do. The part I didn't expect to like most is the fade. Everything dimming over about 25 seconds as I walk out makes it feel deliberate, rather than as if the room crashed. Both morning bugs came from treating "on" as something stored in Home Assistant, when the monitors keep their own brightness and the PC sometimes isn't there to answer.
+The point was energy, and the honest saving at 20 minutes a day is about £3 a year. Four screens and a light strip that used to stay on through every coffee break now go dark within a minute, though, and that adds up as the empty hours do. The part I didn't expect to like most is the fade. Everything dimming over about 25 seconds as I walk out makes it feel deliberate, rather than as if the room crashed. Both morning bugs came from treating "on" as something stored in Home Assistant, when the monitors keep their own brightness and the PC sometimes isn't there to answer. The third was mine alone: three parallel branches sharing a variable called `start`, wrong from the first run and invisible until a value went over 100.
 
 ## Or just hand this page to your agent
 
