@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/how-to-expand-an-lvm-lv-to-use-all-space-on-the-pv/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2024-09-04
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: linux, lvm, ubuntu
 
 

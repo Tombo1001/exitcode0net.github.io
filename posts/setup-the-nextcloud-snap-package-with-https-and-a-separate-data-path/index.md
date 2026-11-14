@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/setup-the-nextcloud-snap-package-with-https-and-a-separate-data-path/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-03-29
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: linux, nextcloud, snap, snapcraft, ubuntu
 
 

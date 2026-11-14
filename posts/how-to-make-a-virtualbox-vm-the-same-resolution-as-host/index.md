@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/how-to-make-a-virtualbox-vm-the-same-resolution-as-host/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-01-16
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: resolution, virtualbox
 
 

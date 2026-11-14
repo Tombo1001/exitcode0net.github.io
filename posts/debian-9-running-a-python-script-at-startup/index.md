@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/debian-9-running-a-python-script-at-startup/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-02-21
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: crontab, debian, linux, scripting, startup
 
 

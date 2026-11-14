@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/prevent-screensavers-and-lock-screens-with-powershell/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-03-26
-Updated: 2026-11-12
+Updated: 2026-11-14
 Tags: code, powershell, windows
 
 

@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/automatically-pause-spotify-with-the-3cx-client/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-05-16
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: 3cx, autoit, spotify
 
 

@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/how-to-python-infinite-loops-with-while-true/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-05-05
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: code, python
 
 

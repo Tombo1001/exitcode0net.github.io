@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/creating-a-local-dns-server-with-pi-hole/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-02-16
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: adblocker, configuration, dns, networking, pi-hole
 
 

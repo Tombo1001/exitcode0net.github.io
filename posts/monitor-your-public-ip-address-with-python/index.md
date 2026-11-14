@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/monitor-your-public-ip-address-with-python/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-12-13
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: python, networking, ip-address, monitoring
 
 

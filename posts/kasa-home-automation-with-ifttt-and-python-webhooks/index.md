@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/kasa-home-automation-with-ifttt-and-python-webhooks/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-12-04
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: home-automation, ifttt, python, webhooks
 
 

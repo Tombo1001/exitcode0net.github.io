@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/how-to-check-if-ram-is-running-in-ecc-mode/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-05-30
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: dmidecode, ecc-ram, linux, windows, wmic
 
 

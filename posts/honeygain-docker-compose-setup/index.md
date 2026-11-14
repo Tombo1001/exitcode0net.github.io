@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/honeygain-docker-compose-setup/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2021-03-04
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: docker, docker-compose, honeygain
 
 > **Updated October 2026:** I re-tested the container on 8 October 2026. It's now Honeygain CLI 0.9.0, every flag my original post used still exists, and the compose file below keeps your login out of the YAML. I also fixed the last command, which was wrong in the original. I didn't log in with a real account for the test, so I haven't re-checked what appears on the dashboard. This post contains my Honeygain referral link, which earns me a bonus if you sign up through it.

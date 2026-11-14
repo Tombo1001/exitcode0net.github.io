@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/awus036ac-rt8812au-driver-setup-in-kali-linux/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-12-03
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: alfa, awus036ac, drivers, kali
 
 

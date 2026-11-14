@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/how-to-raspberry-pi-boot-from-usb/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-05-23
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: linux, pi4, raspberry-pi
 
 

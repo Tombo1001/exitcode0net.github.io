@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/getting-started-with-python-3-a-beginners-cheat-sheet/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-11-23
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: code, python
 
 

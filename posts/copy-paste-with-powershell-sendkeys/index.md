@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/copy-paste-with-powershell-sendkeys/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-02-02
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: code, powershell, scripting, scripts
 
 

@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/fixed-bose-bluetooth-headphones-with-windows-10/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-08-30
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: bose, drivers, windows-10
 
 

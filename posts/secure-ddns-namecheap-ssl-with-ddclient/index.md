@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/secure-ddns-namecheap-ssl-with-ddclient/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-01-25
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: ddclient, ddns, namecheap
 
 

@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/how-to-upgrade-ubuntu-from-18-04-to-20-04/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-04-21
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: 20.04-lts, linux, ubuntu, upgrade-ubuntu
 
 

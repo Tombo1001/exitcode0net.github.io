@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/python-3-ssh-with-paramiko/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-05-15
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: code, paramiko, python, ssh
 
 

@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/turn-off-tplink-smart-plug-led/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2021-08-22
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: hs100, hs110, kasa, tplink
 
 

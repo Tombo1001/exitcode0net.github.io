@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/unraid-usb-controller-passthrough-vm-hot-swap-usb/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2021-03-03
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: libvirt, unraid, usb-hot-swap
 
 

@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/using-a-dht11-sensor-with-a-raspberry-pi/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-02-24
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: dht11, electronics, gpio, raspberry-pi, temperature-sensor
 
 

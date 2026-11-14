@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/fortigate-ap-bridge-with-a-hardware-switch/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2021-01-17
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: ap-bridge, fortigate, vlans
 
 

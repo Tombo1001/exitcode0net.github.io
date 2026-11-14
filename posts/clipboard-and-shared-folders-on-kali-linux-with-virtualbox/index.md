@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/clipboard-and-shared-folders-on-kali-linux-with-virtualbox/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-11-21
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: kali, linux, tidbits, virtualbox
 
 

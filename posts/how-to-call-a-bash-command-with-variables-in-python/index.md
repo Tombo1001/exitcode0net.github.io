@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/how-to-call-a-bash-command-with-variables-in-python/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-12-28
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: bash, how-to, linux, python
 
 > **Updated October 2026:** the code in my 2020 version of this post didn't run. It used `:` where it needed `=`, wrote `Import` with a capital, and passed a command string to `Popen` without a shell, which raises `FileNotFoundError`. I've rewritten the examples, run every one on Python 3.14.4, and added the part I should have warned you about, which is shell injection.

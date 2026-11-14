@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/solved-running-docker-on-a-raspberry-pi-4/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-07-10
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: 4gb, docker, linux, pi-4, raspberry-pi, raspbian
 
 

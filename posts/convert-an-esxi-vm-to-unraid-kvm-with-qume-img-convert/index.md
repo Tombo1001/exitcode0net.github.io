@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/convert-an-esxi-vm-to-unraid-kvm-with-qume-img-convert/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-02-03
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: convert-vmdk, esxi, kvm, unraid
 
 

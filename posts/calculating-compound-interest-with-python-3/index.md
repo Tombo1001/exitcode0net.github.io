@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/calculating-compound-interest-with-python-3/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2021-01-03
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: code, finance, python
 
 

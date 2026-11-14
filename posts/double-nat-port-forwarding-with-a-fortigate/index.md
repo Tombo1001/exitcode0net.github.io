@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/double-nat-port-forwarding-with-a-fortigate/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-02-23
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: double-nat, fortigate, networking, portforward, vip
 
 

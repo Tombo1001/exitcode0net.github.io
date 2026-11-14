@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/kali-linux-2020-1-no-more-root-by-default/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-01-28
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: kali-linux-2020.1, linux
 
 

@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/customising-the-powershell-prompt-to-show-date-and-time/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2021-07-24
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: powershell, profile, windows-terminal
 
 

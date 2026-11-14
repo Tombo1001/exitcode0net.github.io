@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/how-to-enable-subnet-overlapping-on-a-fortigate/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2020-01-07
-Updated: 2026-10-08
+Updated: 2026-11-14
 Tags: fortigate, networking, subnet-overlapping
 
 
