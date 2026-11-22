@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/using-a-dht11-sensor-with-a-raspberry-pi/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2019-02-24
-Updated: 2026-11-14
+Updated: 2026-11-22
 Tags: dht11, electronics, gpio, raspberry-pi, temperature-sensor
 
 
@@ -26,6 +26,7 @@ The sensor pin are a positive power pin, a neutral pin and a data pin. Depending
 The 40-pin header layout is on [pinout.xyz](https://pinout.xyz/), which is the reference I keep open when wiring anything to the Pi.
 The pins to connect the DHT11 to in this example would be 2, 6, and 7. That being said, it would be possible to use any of the other available data pins (green), if this was the only device attached via the GPIO pins.
 
+If you'd rather have a sensor that runs from a battery than from a Pi's GPIO pins, I've since put [low-power firmware on a Pimoroni Enviro Urban](https://exitcode0.net/posts/pimoroni-enviro-urban-low-power-firmware-battery-life/). It reports temperature, humidity and air quality over MQTT and lasts weeks on a charge.
 
 
 ---
