@@ -5,7 +5,7 @@
 Source: https://exitcode0.net/posts/dumb-terminal-dev-vm-tailscale-claude-code/
 Author: Tom Cocking (https://tomcocking.com)
 Published: 2026-09-24
-Updated: 2026-11-10
+Updated: 2026-11-25
 Tags: tailscale, claude-code, t3-code, self-hosted, proxmox, remote-development, omarchy, thin-client, scp, windows
 
 
@@ -18,7 +18,7 @@ Here's the setup, what it's given me, and why it's letting me strip a load of bl
 
 The core of this is a small always-on VM I call `forge`, sat on a Proxmox host at home - 6 cores, 16GB RAM, 100GB disk, nothing exotic. It runs Ubuntu Server LTS, and its entire job is to be the place where work happens: persistent terminal sessions, containers, long-running agent jobs, git remotes. The laptop never runs any of that directly.
 
-The VM itself is almost incidental - the piece actually doing the work is `t3 serve`, running as a systemd background service on `forge`. A stable network connection keeps a *connection* alive; it doesn't keep a *session* alive if the client disconnects or the VM itself reboots. Because systemd owns the service, it comes back on its own after a reboot with no input from me, and every environment, project, and agent thread it's serving is exactly where I left it the moment it's reachable again.
+The VM itself is almost incidental - the piece actually doing the work is `t3 serve`, running as a systemd background service on `forge`. A stable network connection keeps a *connection* alive; it doesn't keep a *session* alive if the client disconnects or the VM itself reboots. Because systemd owns the service, it comes back on its own after a reboot with no input from me, and every environment, project, and agent thread it's serving is exactly where I left it the moment it's reachable again. That same unit is also where I [turned off T3 Code's telemetry](https://exitcode0.net/posts/t3-code-disable-telemetry-linux-windows/).
 
 ![T3 Code's dark theme picker, running against the forge environment.](https://exitcode0.net/images/dumb-terminal-t3-code-appearance.jpg)
 
